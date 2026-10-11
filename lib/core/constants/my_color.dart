@@ -1,7 +1,15 @@
 import 'dart:ui';
 
 class MyColor {
-  static Color primaryColor = Color(0xFF064D3B);
-  static Color backgroundColorLinearProgressIndicator = Color(0xFFe0e0e0);
-  static Color background = Color(0xFFfefefe);
+  // Car Rental App UI Kit Palette
+  static const Color primaryColor = Color(0xFF121933);
+  static const Color accentBlue = Color(0xFF3B82F6);
+  static const Color goldRating = Color(0xFFEDC85D);
+  static const Color background = Color(0xFFFBFBFB);
+  static const Color cardColor = Color(0xFFFFFFFF);
+  static const Color textPrimary = Color(0xFF121933);
+  static const Color textSecondary = Color(0xFF808393);
+  static const Color inputFill = Color(0xFFF4F5F7);
+  static const Color borderColor = Color(0xFFD8D8D8);
+  static const Color backgroundColorLinearProgressIndicator = Color(0xFFE0E0E0);
 }

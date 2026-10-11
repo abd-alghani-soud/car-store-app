@@ -1,15 +1,18 @@
+import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const _headerGreen = Color(0xFF16A34A);
-  static const _bgLight = Color(0xFFF1F1E6);
-  static const _darkBg = Color(0xFF111827);
-  static const _darkCard = Color(0xFF1F2933);
-  static const _darkInput = Color(0xFF111827);
-  static const _darkText = Color(0xFFF9FAFB);
-  static const _darkSubText = Color(0xFF9CA3AF);
-  static const _accentGreen = Color(0xFF22C55E);
+  // Car Rental App UI Kit Palette
+  static const primaryColor = MyColor.primaryColor;
+  static const accentBlue = MyColor.accentBlue;
+  static const goldRating = MyColor.goldRating;
+  static const bgLight = MyColor.background;
+  static const cardBg = MyColor.cardColor;
+  static const textPrimary = MyColor.textPrimary;
+  static const textSecondary = MyColor.textSecondary;
+  static const inputBg = MyColor.inputFill;
+  static const borderLight = MyColor.borderColor;
 
   static ThemeData light({required bool isArabic}) {
     final baseTextTheme = isArabic
@@ -19,19 +22,62 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: _bgLight,
+      scaffoldBackgroundColor: bgLight,
+      primaryColor: primaryColor,
       colorScheme: const ColorScheme.light(
-        primary: _headerGreen,
-        surface: Colors.white,
+        primary: primaryColor,
+        secondary: accentBlue,
+        surface: cardBg,
+        onSurface: textPrimary,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: _headerGreen,
+        backgroundColor: cardBg,
         elevation: 0,
+        iconTheme: IconThemeData(color: textPrimary),
+        titleTextStyle: TextStyle(
+          color: textPrimary,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      cardTheme: CardThemeData(
+        color: cardBg,
+        elevation: 2,
+        shadowColor: Colors.black.withOpacity(0.05),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: inputBg,
+        hintStyle: const TextStyle(color: textSecondary, fontSize: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: accentBlue, width: 1.5),
+        ),
       ),
       textTheme: baseTextTheme.apply(
-        bodyColor: _headerGreen,
-        displayColor: _headerGreen,
+        bodyColor: textPrimary,
+        displayColor: textPrimary,
       ),
+      dividerTheme: const DividerThemeData(
+        color: borderLight,
+        thickness: 1,
+      ),
+      iconTheme: const IconThemeData(color: primaryColor),
     );
   }
 
@@ -43,18 +89,15 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-
-      scaffoldBackgroundColor: _darkBg,
-
+      scaffoldBackgroundColor: const Color(0xFF111827),
       colorScheme: const ColorScheme.dark(
-        primary: _headerGreen,
-        secondary: _accentGreen,
-        surface: _darkCard,
-        onSurface: _darkText,
+        primary: primaryColor,
+        secondary: accentBlue,
+        surface: Color(0xFF1F2933),
+        onSurface: Colors.white,
       ),
-
       appBarTheme: const AppBarTheme(
-        backgroundColor: _headerGreen,
+        backgroundColor: Color(0xFF111827),
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(
@@ -63,49 +106,10 @@ class AppTheme {
           fontWeight: FontWeight.bold,
         ),
       ),
-
-      cardTheme: CardThemeData(
-        color: _darkCard,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: Colors.white.withOpacity(0.06)),
-        ),
-      ),
-
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: _darkInput,
-        hintStyle: const TextStyle(color: _darkSubText),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 16,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.08)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.08)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: _accentGreen, width: 1.6),
-        ),
-      ),
-
       textTheme: baseTextTheme.apply(
-        bodyColor: _darkText,
-        displayColor: _darkText,
+        bodyColor: Colors.white,
+        displayColor: Colors.white,
       ),
-
-      dividerTheme: DividerThemeData(
-        color: Colors.white.withOpacity(0.08),
-        thickness: 1,
-      ),
-
-      iconTheme: const IconThemeData(color: _accentGreen),
     );
   }
 }
