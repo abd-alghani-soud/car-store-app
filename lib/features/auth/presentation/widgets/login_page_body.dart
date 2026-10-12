@@ -53,8 +53,12 @@ class LoginPageBody extends StatelessWidget {
                 style: TextStyle(color: MyColor.textPrimary, fontSize: 14),
               ),
               GestureDetector(
-                child: Text('Sign Up',style: TextStyle(color: MyColor.accentBlue),),
-              )
+                onTap: () {},
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(color: MyColor.accentBlue),
+                ),
+              ),
             ],
           ),
         ],
