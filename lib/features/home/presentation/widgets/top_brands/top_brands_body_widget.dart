@@ -2,22 +2,22 @@ import 'package:car_store_app/features/home/presentation/widgets/top_brands/bran
 import 'package:flutter/material.dart';
 
 class TopBrandsBodyWidget extends StatelessWidget {
-  const TopBrandsBodyWidget({super.key});
+  TopBrandsBodyWidget({super.key});
+
+  final List<Map<String, dynamic>> brands = [
+    {"name": "BMW", "models": 18, "icon": Icons.directions_car},
+    {"name": "Mercedes", "models": 24, "icon": Icons.directions_car_filled},
+    {"name": "Porsche", "models": 12, "icon": Icons.directions_car},
+    {"name": "Ferrari", "models": 8, "icon": Icons.local_taxi},
+    {"name": "Skoda", "models": 10, "icon": Icons.car_rental},
+    {"name": "Audi", "models": 15, "icon": Icons.car_repair},
+    {"name": "Lamborghini", "models": 6, "icon": Icons.electric_car},
+    {"name": "Tesla", "models": 14, "icon": Icons.bolt},
+    {"name": "Matiz", "models": 5, "icon": Icons.directions_car},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> brands = [
-      {"name": "BMW", "models": 18, "icon": Icons.directions_car},
-      {"name": "Mercedes", "models": 24, "icon": Icons.directions_car_filled},
-      {"name": "Porsche", "models": 12, "icon": Icons.directions_car},
-      {"name": "Ferrari", "models": 8, "icon": Icons.local_taxi},
-      {"name": "Skoda", "models": 10, "icon": Icons.car_rental},
-      {"name": "Audi", "models": 15, "icon": Icons.car_repair},
-      {"name": "Lamborghini", "models": 6, "icon": Icons.electric_car},
-      {"name": "Tesla", "models": 14, "icon": Icons.bolt},
-      {"name": "Matiz", "models": 5, "icon": Icons.directions_car},
-    ];
-
     return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

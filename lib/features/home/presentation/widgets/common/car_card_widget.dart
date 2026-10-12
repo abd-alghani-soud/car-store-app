@@ -2,12 +2,14 @@ import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:car_store_app/features/home/presentation/pages/car_details_page.dart';
 import 'package:flutter/material.dart';
 
-class CarItemCardWidget extends StatelessWidget {
+class CarCardWidget extends StatelessWidget {
   final Map<String, dynamic> car;
+  final EdgeInsetsGeometry? margin;
 
-  const CarItemCardWidget({
+  const CarCardWidget({
     super.key,
     required this.car,
+    this.margin,
   });
 
   @override
@@ -22,7 +24,7 @@ class CarItemCardWidget extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
+        margin: margin ?? const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: MyColor.cardColor,
@@ -43,7 +45,7 @@ class CarItemCardWidget extends StatelessWidget {
               children: [
                 Center(
                   child: Image.asset(
-                    car["image"],
+                    car["image"] ?? 'assets/images/random/ii.png',
                     height: 140,
                     fit: BoxFit.cover,
                   ),
@@ -67,7 +69,7 @@ class CarItemCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  car["name"],
+                  car["name"] ?? "",
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -75,7 +77,7 @@ class CarItemCardWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  car["transmission"],
+                  car["transmission"] ?? "Automatic",
                   style: const TextStyle(
                     fontSize: 12,
                     color: MyColor.textSecondary,
@@ -93,7 +95,7 @@ class CarItemCardWidget extends StatelessWidget {
                     const Icon(Icons.star, color: MyColor.goldRating, size: 16),
                     const SizedBox(width: 4),
                     Text(
-                      "${car["rating"]}",
+                      "${car["rating"] ?? 4.8}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -102,7 +104,7 @@ class CarItemCardWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      "(${car["reviews"]} Reviews)",
+                      "(${car["reviews"] ?? 150} Reviews)",
                       style: const TextStyle(color: MyColor.textSecondary, fontSize: 12),
                     ),
                   ],
@@ -111,7 +113,7 @@ class CarItemCardWidget extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "\$${car["price"]}",
+                        text: "\$${car["price"] ?? 54}",
                         style: const TextStyle(
                           color: MyColor.accentBlue,
                           fontWeight: FontWeight.bold,

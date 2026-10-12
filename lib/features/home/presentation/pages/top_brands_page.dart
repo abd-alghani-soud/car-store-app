@@ -26,7 +26,7 @@ class TopBrandsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: const TopBrandsBodyWidget(),
+      body:  TopBrandsBodyWidget(),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:car_store_app/features/home/presentation/widgets/all_cars/car_category_filter_widget.dart';
-import 'package:car_store_app/features/home/presentation/widgets/all_cars/car_item_card_widget.dart';
+import 'package:car_store_app/features/home/presentation/widgets/common/car_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class AllCarsBodyWidget extends StatelessWidget {
@@ -95,7 +95,7 @@ class AllCarsBodyWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 itemCount: filteredCars.length,
                 itemBuilder: (context, index) {
-                  return CarItemCardWidget(car: filteredCars[index]);
+                  return CarCardWidget(car: filteredCars[index]);
                 },
               );
             },
