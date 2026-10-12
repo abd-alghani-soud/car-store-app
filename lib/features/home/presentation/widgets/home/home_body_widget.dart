@@ -1,7 +1,7 @@
-import 'package:car_store_app/features/home/presentation/widgets/custom_appbar_widget.dart';
-import 'package:car_store_app/features/home/presentation/widgets/custom_car_card_widget.dart';
-import 'package:car_store_app/features/home/presentation/widgets/custom_search_widget.dart';
-import 'package:car_store_app/features/home/presentation/widgets/top_brands_widget.dart';
+import 'package:car_store_app/features/home/presentation/widgets/home/custom_appbar_widget.dart';
+import 'package:car_store_app/features/home/presentation/widgets/home/custom_car_card_widget.dart';
+import 'package:car_store_app/features/home/presentation/widgets/home/custom_search_widget.dart';
+import 'package:car_store_app/features/home/presentation/widgets/home/top_brands_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeBodyWidget extends StatelessWidget {

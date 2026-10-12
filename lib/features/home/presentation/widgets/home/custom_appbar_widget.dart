@@ -54,9 +54,9 @@ class CustomAppbarWidget extends StatelessWidget {
         Container(
           width: 42,
           height: 42,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            image: const DecorationImage(
+            image: DecorationImage(
               image: AssetImage("assets/images/random/ii.png"),
               fit: BoxFit.cover,
             ),
