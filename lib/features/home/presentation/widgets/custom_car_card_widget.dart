@@ -1,4 +1,5 @@
 import 'package:car_store_app/core/constants/my_color.dart';
+import 'package:car_store_app/features/home/presentation/pages/all_cars_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomCarCardWidget extends StatelessWidget {
@@ -11,8 +12,8 @@ class CustomCarCardWidget extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
+          children: [
+            const Text(
               "All Cars",
               style: TextStyle(
                 fontSize: 18,
@@ -20,12 +21,20 @@ class CustomCarCardWidget extends StatelessWidget {
                 color: MyColor.textPrimary,
               ),
             ),
-            Text(
-              "View All",
-              style: TextStyle(
-                fontSize: 14,
-                color: MyColor.accentBlue,
-                fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AllCarsPage()),
+                );
+              },
+              child: const Text(
+                "View All",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: MyColor.accentBlue,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],

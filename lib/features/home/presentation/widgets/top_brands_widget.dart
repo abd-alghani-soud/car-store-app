@@ -1,4 +1,5 @@
 import 'package:car_store_app/core/constants/my_color.dart';
+import 'package:car_store_app/features/home/presentation/pages/top_brands_page.dart';
 import 'package:flutter/material.dart';
 
 class TopBrandsWidget extends StatelessWidget {
@@ -18,8 +19,8 @@ class TopBrandsWidget extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
+          children: [
+            const Text(
               "Top Brands",
               style: TextStyle(
                 fontSize: 18,
@@ -27,12 +28,20 @@ class TopBrandsWidget extends StatelessWidget {
                 color: MyColor.textPrimary,
               ),
             ),
-            Text(
-              "View All",
-              style: TextStyle(
-                fontSize: 14,
-                color: MyColor.accentBlue,
-                fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TopBrandsPage()),
+                );
+              },
+              child: const Text(
+                "View All",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: MyColor.accentBlue,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],
