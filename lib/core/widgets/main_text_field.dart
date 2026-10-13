@@ -206,15 +206,16 @@ class _MainTextFieldState extends State<MainTextField>
                         context.theme.hintColor.withOpacity(.2),
                   ),
                 ),
+
                 focusedBorder: OutlineInputBorder(
                   borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
                   borderSide: BorderSide(
                       color: widget.borderColor ??
                           context.theme.hintColor.withOpacity(.2)),
                 ),
-                constraints: BoxConstraints(
-                    maxHeight: widget.height ?? double.infinity,
-                    maxWidth: widget.width ?? double.infinity),
+                // constraints: BoxConstraints(
+                //     maxHeight: widget.height ?? double.infinity,
+                //     maxWidth: widget.width ?? double.infinity),
                 border: OutlineInputBorder(
                   borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
                   borderSide: BorderSide(
