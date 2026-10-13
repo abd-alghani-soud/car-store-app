@@ -9,9 +9,36 @@ class MainPage extends StatelessWidget {
 
   final List<Widget> _pages = const [
     HomePage(),
-    Center(child: Text('Bookmarks Page', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColor.textPrimary))),
-    Center(child: Text('Notifications Page', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColor.textPrimary))),
-    Center(child: Text('Profile Page', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: MyColor.textPrimary))),
+    Center(
+      child: Text(
+        'Bookmarks Page',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: MyColor.textPrimary,
+        ),
+      ),
+    ),
+    Center(
+      child: Text(
+        'Orders Page',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: MyColor.textPrimary,
+        ),
+      ),
+    ),
+    Center(
+      child: Text(
+        'Profile Page',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: MyColor.textPrimary,
+        ),
+      ),
+    ),
   ];
 
   @override
@@ -41,9 +68,9 @@ class MainPage extends StatelessWidget {
                 label: 'Bookmarks',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_none),
-                activeIcon: Icon(Icons.notifications),
-                label: 'Notifications',
+                icon: Icon(Icons.receipt_long_outlined),
+                activeIcon: Icon(Icons.receipt_long),
+                label: 'Orders',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_outline),
