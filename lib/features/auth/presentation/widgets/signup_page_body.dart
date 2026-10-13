@@ -16,8 +16,6 @@ class _SignupPageBodyState extends State<SignupPageBody> {
   final _fromKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmController =
-      TextEditingController();
 
   @override
   void dispose() {
@@ -52,6 +50,9 @@ class _SignupPageBodyState extends State<SignupPageBody> {
               ),
               SizedBox(height: 30),
               MainTextField(
+                validator: (value) {
+                  return validateRequired(value);
+                },
                 height: 50,
                 width: 355,
                 hint: 'Username',
@@ -106,18 +107,31 @@ class _SignupPageBodyState extends State<SignupPageBody> {
               ),
               SizedBox(height: 20),
               MainTextField(
-                controller: _passwordConfirmController,
                 validator: (value) {
-                  return validateConfirmPassword(
-                    value,
-                    _passwordController.text,
-                  );
+                  return validateRequired(value);
                 },
                 height: 50,
                 width: 355,
-                hint: 'Confirm password',
+                hint: 'phone number',
+                prefixIcon: Icon(Icons.phone, color: MyColor.borderColor),
+                hintTextStyle: TextStyle(
+                  color: MyColor.borderColor,
+                  fontSize: 16,
+                ),
+                fillColor: MyColor.inputFill,
+                borderRadius: BorderRadius.circular(16),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20),
+              MainTextField(
+                height: 50,
+                width: 355,
+                validator: (value) {
+                  return validateRequired(value);
+                },
+                hint: 'Address',
                 prefixIcon: Icon(
-                  Icons.lock_outline_sharp,
+                  Icons.location_city_outlined,
                   color: MyColor.borderColor,
                 ),
                 hintTextStyle: TextStyle(
@@ -126,7 +140,6 @@ class _SignupPageBodyState extends State<SignupPageBody> {
                 ),
                 fillColor: MyColor.inputFill,
                 borderRadius: BorderRadius.circular(16),
-                isPassword: true,
               ),
               SizedBox(height: 62),
               MainButton(
@@ -140,9 +153,6 @@ class _SignupPageBodyState extends State<SignupPageBody> {
                 borderRadius: BorderRadius.circular(22),
                 onPressed: () {
                   if (_fromKey.currentState!.validate()) {
-                    final email = _emailController.text;
-                    final password = _passwordController.text;
-                    print('Login Success : Email:$email');
                   } else {
                     print('Validation Error');
                   }

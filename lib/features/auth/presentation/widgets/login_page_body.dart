@@ -107,7 +107,10 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                 color: MyColor.accentBlue,
                 borderRadius: BorderRadius.circular(22),
                 onPressed: () {
-
+                  if (_fromKey.currentState!.validate()) {
+                  } else {
+                    print('Validation Error');
+                  }
                 },
               ),
               SizedBox(height: 20),

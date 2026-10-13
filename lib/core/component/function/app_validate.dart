@@ -26,3 +26,11 @@ String? validatePassword(String? value) {
       return 'the two password do not match';
     }
     return null;}
+
+   String? validateRequired(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This failed is required';
+    }
+    return null;
+  }
+
