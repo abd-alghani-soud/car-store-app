@@ -7,7 +7,7 @@ abstract class BrandRepo {
 
   Future<Either<Failure, BrandEntity>> getBrandById(int id);
 
-  Future<Either<Failure, BrandEntity>> createBrand(BrandEntity brand);
+    Future<Either<Failure, BrandEntity>> createBrand(BrandEntity brand);
 
   Future<Either<Failure, void>> deleteBrand(int id);
 
