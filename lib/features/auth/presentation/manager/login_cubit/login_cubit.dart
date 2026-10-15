@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:car_store_app/features/auth/domain/usecases/login_use_case.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';
-
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required this.loginUseCase}) : super(LoginInitial());
   final LoginUseCase loginUseCase;

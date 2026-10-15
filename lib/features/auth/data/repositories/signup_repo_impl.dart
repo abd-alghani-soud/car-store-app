@@ -3,7 +3,9 @@ import 'package:car_store_app/features/auth/data/datasources/auth_remote_data_so
 import 'package:car_store_app/features/auth/domain/entities/signup_entity.dart';
 import 'package:car_store_app/features/auth/domain/repositories/signup_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: SignupRepo)
 class SignupRepoImpl extends SignupRepo {
   final AuthRemoteDataSource authRemoteDataSource;
 

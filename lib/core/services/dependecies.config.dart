@@ -17,8 +17,21 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../features/auth/data/datasources/auth_remote_data_source.dart'
+    as _i107;
+import '../../features/auth/data/repositories/login_repo_impl.dart' as _i886;
+import '../../features/auth/data/repositories/signup_repo_impl.dart' as _i356;
+import '../../features/auth/domain/repositories/login_repo.dart' as _i502;
+import '../../features/auth/domain/repositories/signup_repo.dart' as _i812;
+import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
+import '../../features/auth/domain/usecases/signup_use_case.dart' as _i229;
+import '../../features/auth/presentation/manager/login_cubit/login_cubit.dart'
+    as _i863;
+import '../../features/auth/presentation/manager/signup_Cubit/signup_cubit.dart'
+    as _i81;
 import '../cubit/theme_cubit.dart' as _i319;
 import '../network/network_checker.dart' as _i387;
+import 'api.dart' as _i937;
 import 'dependecies.dart' as _i1048;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -40,6 +53,31 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i519.Client>(() => injectionModule.httpClient);
     gh.factory<_i387.NetworkChecker>(
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
+    );
+    gh.lazySingleton<_i107.AuthRemoteDataSource>(
+      () => _i107.AuthRemoteDataSourceImpl(api: gh<_i937.Api>()),
+    );
+    gh.lazySingleton<_i502.LoginRepo>(
+      () => _i886.LoginRepoImpl(
+        authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i812.SignupRepo>(
+      () => _i356.SignupRepoImpl(
+        authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i37.LoginUseCase>(
+      () => _i37.LoginUseCase(loginRepo: gh<_i502.LoginRepo>()),
+    );
+    gh.factory<_i229.SignupUseCase>(
+      () => _i229.SignupUseCase(signupRepo: gh<_i812.SignupRepo>()),
+    );
+    gh.factory<_i863.LoginCubit>(
+      () => _i863.LoginCubit(loginUseCase: gh<_i37.LoginUseCase>()),
+    );
+    gh.factory<_i81.SignupCubit>(
+      () => _i81.SignupCubit(signupUseCase: gh<_i229.SignupUseCase>()),
     );
     return this;
   }

@@ -3,6 +3,7 @@ import 'package:car_store_app/features/auth/data/models/login_model.dart';
 import 'package:car_store_app/features/auth/data/models/signup_model.dart';
 import 'package:car_store_app/features/auth/domain/entities/login_entity.dart';
 import 'package:car_store_app/features/auth/domain/entities/signup_entity.dart';
+import 'package:injectable/injectable.dart';
 
 abstract class AuthRemoteDataSource {
   Future<LoginEntity> login({required String email, required String password});
@@ -17,6 +18,7 @@ abstract class AuthRemoteDataSource {
   });
 }
 
+@LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   final Api api;
 

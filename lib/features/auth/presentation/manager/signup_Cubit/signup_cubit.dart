@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:car_store_app/features/auth/domain/usecases/signup_use_case.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'signup_state.dart';
-
+@injectable
 class SignupCubit extends Cubit<SignupState> {
   SignupCubit({required this.signupUseCase}) : super(SignupInitial());
   final SignupUseCase signupUseCase;

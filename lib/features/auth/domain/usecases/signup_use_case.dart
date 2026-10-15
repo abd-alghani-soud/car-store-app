@@ -1,9 +1,10 @@
 import 'package:car_store_app/features/auth/domain/repositories/signup_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failures.dart';
 import '../entities/signup_entity.dart';
-
+@injectable
 class SignupUseCase {
   final SignupRepo signupRepo;
 
