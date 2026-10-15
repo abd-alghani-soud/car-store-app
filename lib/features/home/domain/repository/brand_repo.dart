@@ -3,13 +3,18 @@ import 'package:car_store_app/features/home/domain/entity/brand_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class BrandRepo {
-  Future<Either<Failure, List<BrandEntity>>> getAllBrands();
+  // =================== getAllBrandsRepo ===================
+  Future<Either<Failure, List<BrandEntity>>> getAllBrandsRepo();
 
-  Future<Either<Failure, BrandEntity>> getBrandById(int id);
+  // =================== getBrandByIdRepo ===================
+  Future<Either<Failure, BrandEntity>> getBrandByIdRepo(int id);
 
-    Future<Either<Failure, BrandEntity>> createBrand(BrandEntity brand);
+  // =================== createBrandRepo ===================
+  Future<Either<Failure, BrandEntity>> createBrandRepo(BrandEntity brand);
 
-  Future<Either<Failure, void>> deleteBrand(int id);
+  // =================== deleteBrandRepo ===================
+  Future<Either<Failure, void>> deleteBrandRepo(int id);
 
-  Future<Either<Failure, void>> updateBrand(int id, BrandEntity brand);
+  // =================== updateBrandRepo ===================
+  Future<Either<Failure, void>> updateBrandRepo(int id, BrandEntity brand);
 }

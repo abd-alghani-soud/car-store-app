@@ -3,17 +3,17 @@ import 'package:car_store_app/features/home/domain/entity/car_entity.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CarRepo {
-  Future<Either<Failure, List<CarEntity>>> getPublicCars();
+  // =================== getPublicCarsRepo ===================
+  Future<Either<Failure, List<CarEntity>>> getPublicCarsRepo();
 
-  Future<Either<Failure, int>> addCar(CarEntity car);
+  // =================== getCarByIdRepo ===================
+  Future<Either<Failure, CarEntity>> getCarByIdRepo(int id);
 
-  Future<Either<Failure, void>> deleteCar(int id);
+  // =================== getCarImagesRepo ===================
+  Future<Either<Failure, List<String>>> getCarImagesRepo(int id);
 
-  Future<Either<Failure, void>> updateCar(int id, CarEntity car);
-
-  Future<Either<Failure, CarEntity>> getCarById(int id);
-
-  Future<Either<Failure, List<CarEntity>>> searchCars({
+  // =================== searchCarsRepo ===================
+  Future<Either<Failure, List<CarEntity>>> searchCarsRepo({
     int? brandId,
     String? model,
     double? minPrice,
@@ -23,7 +23,15 @@ abstract class CarRepo {
     String? gearType,
   });
 
-  Future<Either<Failure, List<CarEntity>>> getMyCars();
+  // =================== getMyCarsRepo ===================
+  Future<Either<Failure, List<CarEntity>>> getMyCarsRepo();
 
-  Future<Either<Failure, List<String>>> getCarImages(int id);
+  // =================== addCarRepo ===================
+  Future<Either<Failure, int>> addCarRepo(CarEntity car);
+
+  // =================== deleteCarRepo ===================
+  Future<Either<Failure, void>> deleteCarRepo(int id);
+
+  // =================== updateCarRepo ===================
+  Future<Either<Failure, void>> updateCarRepo(int id, CarEntity car);
 }

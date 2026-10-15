@@ -9,6 +9,6 @@ class GetBrandByIdUsecase {
   GetBrandByIdUsecase(this.repo);
 
   Future<Either<Failure, BrandEntity>> call(int id) async {
-    return await repo.getBrandById(id);
+    return await repo.getBrandByIdRepo(id);
   }
 }

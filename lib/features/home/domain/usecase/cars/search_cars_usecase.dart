@@ -17,7 +17,7 @@ class SearchCarsUsecase {
     String? fuelType,
     String? gearType,
   }) async {
-    return await repo.searchCars(
+    return await repo.searchCarsRepo(
       brandId: brandId,
       model: model,
       minPrice: minPrice,

@@ -8,6 +8,6 @@ class DeleteCarUsecase {
   DeleteCarUsecase(this.repo);
 
   Future<Either<Failure, void>> call(int id) async {
-    return await repo.deleteCar(id);
+    return await repo.deleteCarRepo(id);
   }
 }

@@ -9,6 +9,6 @@ class UpdateBrandUsecase {
   UpdateBrandUsecase(this.repo);
 
   Future<Either<Failure, void>> call(int id, BrandEntity brand) async {
-    return await repo.updateBrand(id, brand);
+    return await repo.updateBrandRepo(id, brand);
   }
 }

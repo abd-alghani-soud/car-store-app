@@ -9,6 +9,6 @@ class AddCarUsecase {
   AddCarUsecase(this.repo);
 
   Future<Either<Failure, int>> call(CarEntity car) async {
-    return await repo.addCar(car);
+    return await repo.addCarRepo(car);
   }
 }

@@ -9,6 +9,6 @@ class GetCarByIdUsecase {
   GetCarByIdUsecase(this.repo);
 
   Future<Either<Failure, CarEntity>> call(int id) async {
-    return await repo.getCarById(id);
+    return await repo.getCarByIdRepo(id);
   }
 }

@@ -9,6 +9,6 @@ class GetAllBrandsUsecase {
   GetAllBrandsUsecase(this.repo);
 
   Future<Either<Failure, List<BrandEntity>>> call() async {
-    return await repo.getAllBrands();
+    return await repo.getAllBrandsRepo();
   }
 }

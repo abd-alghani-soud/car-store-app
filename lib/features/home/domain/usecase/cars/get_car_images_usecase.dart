@@ -8,6 +8,6 @@ class GetCarImagesUsecase {
   GetCarImagesUsecase(this.repo);
 
   Future<Either<Failure, List<String>>> call(int id) async {
-    return await repo.getCarImages(id);
+    return await repo.getCarImagesRepo(id);
   }
 }

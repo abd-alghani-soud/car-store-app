@@ -9,6 +9,6 @@ class CreateBrandUsecase {
   CreateBrandUsecase(this.repo);
 
   Future<Either<Failure, BrandEntity>> call(BrandEntity brand) async {
-    return await repo.createBrand(brand);
+    return await repo.createBrandRepo(brand);
   }
 }
