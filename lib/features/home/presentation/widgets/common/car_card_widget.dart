@@ -14,6 +14,10 @@ class CarCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String imagePath = car["image"] ?? 'assets/images/random/ii.png';
+    debugPrint('=== CarCardWidget Image Path: $imagePath ===');
+    final bool isNetworkImage = imagePath.startsWith('http');
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -44,11 +48,25 @@ class CarCardWidget extends StatelessWidget {
               alignment: Alignment.topRight,
               children: [
                 Center(
-                  child: Image.asset(
-                    car["image"] ?? 'assets/images/random/ii.png',
-                    height: 140,
-                    fit: BoxFit.cover,
-                  ),
+                  child: isNetworkImage
+                      ? Image.network(
+                          imagePath,
+                          height: 140,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            debugPrint('=== Image.network Error: $error ===');
+                            return Image.asset(
+                              'assets/images/random/ii.png',
+                              height: 140,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        )
+                      : Image.asset(
+                          imagePath,
+                          height: 140,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 Container(
                   padding: const EdgeInsets.all(6),

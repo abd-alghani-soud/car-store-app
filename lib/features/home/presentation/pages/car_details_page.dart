@@ -14,7 +14,8 @@ class CarDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String name = carData["name"] ?? "Maserati 867";
-    final int price = carData["price"] ?? 54;
+    final num rawPrice = carData["price"] ?? 54;
+    final int price = rawPrice.toInt();
 
     return Scaffold(
       backgroundColor: MyColor.background,

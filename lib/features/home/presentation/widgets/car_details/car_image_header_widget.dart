@@ -11,6 +11,8 @@ class CarImageHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isNetworkImage = imagePath.startsWith('http');
+
     return Container(
       height: 220,
       width: double.infinity,
@@ -26,11 +28,22 @@ class CarImageHeaderWidget extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: Image.asset(
-          imagePath,
-          height: 180,
-          fit: BoxFit.cover,
-        ),
+        child: isNetworkImage
+            ? Image.network(
+                imagePath,
+                height: 180,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  'assets/images/random/ii.png',
+                  height: 180,
+                  fit: BoxFit.cover,
+                ),
+              )
+            : Image.asset(
+                imagePath,
+                height: 180,
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
