@@ -20,10 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/auth/data/datasources/auth_remote_data_source.dart'
     as _i107;
-import '../../features/auth/data/repositories/login_repo_impl.dart' as _i886;
-import '../../features/auth/data/repositories/signup_repo_impl.dart' as _i356;
-import '../../features/auth/domain/repositories/login_repo.dart' as _i502;
-import '../../features/auth/domain/repositories/signup_repo.dart' as _i812;
+import '../../features/auth/data/repositories/auth_repo_impl.dart' as _i662;
+import '../../features/auth/domain/repositories/auth_repo.dart' as _i723;
 import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
 import '../../features/auth/domain/usecases/signup_use_case.dart' as _i229;
 import '../../features/auth/presentation/manager/login_cubit/login_cubit.dart'
@@ -60,21 +58,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(api: gh<_i937.Api>()),
     );
-    gh.lazySingleton<_i502.LoginRepo>(
-      () => _i886.LoginRepoImpl(
-        authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i812.SignupRepo>(
-      () => _i356.SignupRepoImpl(
+    gh.lazySingleton<_i723.AuthRepo>(
+      () => _i662.AuthRepoImpl(
         authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
       ),
     );
     gh.factory<_i37.LoginUseCase>(
-      () => _i37.LoginUseCase(loginRepo: gh<_i502.LoginRepo>()),
+      () => _i37.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
     gh.factory<_i229.SignupUseCase>(
-      () => _i229.SignupUseCase(signupRepo: gh<_i812.SignupRepo>()),
+      () => _i229.SignupUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
     gh.factory<_i863.LoginCubit>(
       () => _i863.LoginCubit(loginUseCase: gh<_i37.LoginUseCase>()),
