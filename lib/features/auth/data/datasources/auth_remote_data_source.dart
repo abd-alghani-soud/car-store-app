@@ -30,7 +30,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     required String password,
   }) async {
     var data = await api.post(
-      endPoint: 'api/Auth/login',
+      endPoint: 'Auth/login',
       data: {"email": email, "password": password},
     );
     LoginEntity loginEntity;
@@ -48,7 +48,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     required String role,
   }) async {
     var data = await api.post(
-      endPoint: 'api/Auth/register',
+      endPoint: 'Auth/register',
       data: {
         "fullName": fullName,
         "email": email,

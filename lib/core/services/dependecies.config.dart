@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
@@ -51,9 +52,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => injectionModule.connectionChecker,
     );
     gh.lazySingleton<_i519.Client>(() => injectionModule.httpClient);
+    gh.lazySingleton<_i361.Dio>(() => injectionModule.dio);
     gh.factory<_i387.NetworkChecker>(
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
     );
+    gh.factory<_i937.Api>(() => _i937.Api(gh<_i361.Dio>()));
     gh.lazySingleton<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(api: gh<_i937.Api>()),
     );
