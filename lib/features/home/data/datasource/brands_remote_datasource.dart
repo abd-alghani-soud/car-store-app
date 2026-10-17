@@ -1,5 +1,7 @@
+import 'package:car_store_app/core/error/exceptions.dart';
 import 'package:car_store_app/core/services/api_service.dart';
 import 'package:car_store_app/features/home/data/model/brand_model.dart';
+import 'package:injectable/injectable.dart';
 
 // =================== BrandsRemoteDatasource ===================
 abstract class BrandsRemoteDatasource {
@@ -15,54 +17,64 @@ abstract class BrandsRemoteDatasource {
 }
 
 // =================== BrandsRemoteDatasourceImp ===================
+@Injectable(as: BrandsRemoteDatasource)
 class BrandsRemoteDatasourceImp extends BrandsRemoteDatasource {
   final ApiService apiService;
 
   BrandsRemoteDatasourceImp({required this.apiService});
 
-  // =================== getAllBrandsDatasource ===================
-
   @override
   Future<List<BrandModel>> getAllBrandsDatasource() async {
-    final response = await apiService.get(endPoint: 'Brands/All-Brands');
-    final List data = response;
-    return data.map((json) => BrandModel.fromJson(json)).toList();
+    try {
+      final response = await apiService.get(endPoint: 'Brands/All-Brands');
+      final List data = response;
+      return data.map((json) => BrandModel.fromJson(json)).toList();
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
-
-  // =================== getBrandByIdDatasource ===================
 
   @override
   Future<BrandModel> getBrandByIdDatasource(int id) async {
-    final response = await apiService.get(
-      endPoint: 'Brands',
-      queryParameters: {'id': id},
-    );
-    return BrandModel.fromJson(response);
+    try {
+      final response = await apiService.get(endPoint: 'Brands', queryParameters: {'id': id});
+      return BrandModel.fromJson(response);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
-
-  // =================== createBrandDatasource ===================
 
   @override
   Future<BrandModel> createBrandDatasource(BrandModel brand) async {
-    final response = await apiService.post(
-      endPoint: 'Brands',
-      data: {'brandName': brand.name},
-    );
-    return BrandModel.fromJson(response);
+    try {
+      final response = await apiService.post(
+        endPoint: 'Brands',
+        data: {'brandName': brand.name},
+      );
+      return BrandModel.fromJson(response);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 
-  // =================== deleteBrandDatasource ===================
   @override
   Future<void> deleteBrandDatasource(int id) async {
-    await apiService.delete(endPoint: 'Brands/$id');
+    try {
+      await apiService.delete(endPoint: 'Brands/$id');
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 
-  // =================== updateBrandDatasource ===================
   @override
   Future<void> updateBrandDatasource(int id, BrandModel brand) async {
-    await apiService.put(
-      endPoint: 'Brands/$id',
-      data: {'brandName': brand.name},
-    );
+    try {
+      await apiService.put(
+        endPoint: 'Brands/$id',
+        data: {'brandName': brand.name},
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 }

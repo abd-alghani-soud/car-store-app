@@ -9,10 +9,14 @@ class BrandModel extends BrandEntity {
   });
 
   factory BrandModel.fromJson(Map<String, dynamic> json) {
+    String logo = json['brandLogoUrl'] ?? json['logoUrl'] ?? '';
+    if (logo.startsWith('/')) {
+      logo = 'http://10.0.2.2:5000$logo';
+    }
     return BrandModel(
       id: json['brandId'] ?? json['id'] ?? 0,
       name: json['name'] ?? '',
-      logoUrl: json['brandLogoUrl'] ?? json['logoUrl'] ?? '',
+      logoUrl: logo,
       modelsCount: json['modelsCount'] ?? 10,
     );
   }

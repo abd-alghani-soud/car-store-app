@@ -1,5 +1,6 @@
 import 'package:car_store_app/core/services/api_service.dart';
 import 'package:car_store_app/features/home/data/model/car_model.dart';
+import 'package:injectable/injectable.dart';
 
 // =================== CarsRemoteDatasource ===================
 abstract class CarsRemoteDatasource {
@@ -29,12 +30,12 @@ abstract class CarsRemoteDatasource {
 }
 
 // =================== CarsRemoteDatasourceImp ===================
+@Injectable(as: CarsRemoteDatasource)
 class CarsRemoteDatasourceImp implements CarsRemoteDatasource {
   final ApiService api;
 
   CarsRemoteDatasourceImp(this.api);
 
-  // =================== getPublicCarsDatasource ===================
   @override
   Future<List<CarModel>> getPublicCarsDatasource() async {
     final response = await api.get(endPoint: 'Cars');
@@ -42,7 +43,6 @@ class CarsRemoteDatasourceImp implements CarsRemoteDatasource {
     return data.map((car) => CarModel.fromJson(car)).toList();
   }
 
-  // =================== getCarByIdDatasource ===================
   @override
   Future<CarModel> getCarByIdDatasource(int id) async {
     final response = await api.get(endPoint: 'Cars/$id');
@@ -55,8 +55,6 @@ class CarsRemoteDatasourceImp implements CarsRemoteDatasource {
     final List data = response;
     return data.map((img) => img.toString()).toList();
   }
-
-  // =================== searchCarsDatasource ===================
 
   @override
   Future<List<CarModel>> searchCarsDatasource({
@@ -84,15 +82,12 @@ class CarsRemoteDatasourceImp implements CarsRemoteDatasource {
     return data.map((car) => CarModel.fromJson(car)).toList();
   }
 
-  // =================== getMyCarsDatasource ===================
   @override
   Future<List<CarModel>> getMyCarsDatasource() async {
     final response = await api.get(endPoint: 'Cars/my-cars');
     final List data = response;
     return data.map((car) => CarModel.fromJson(car)).toList();
   }
-
-  // =================== addCarDatasource ===================
 
   @override
   Future<int> addCarDatasource(CarModel car) async {
@@ -107,13 +102,11 @@ class CarsRemoteDatasourceImp implements CarsRemoteDatasource {
     return response['carId'] ?? response['id'] ?? 0;
   }
 
-  // =================== deleteCarDatasource ===================
   @override
   Future<void> deleteCarDatasource(int id) async {
     await api.delete(endPoint: 'Cars/$id');
   }
 
-  // =================== updateCarDatasource ===================
   @override
   Future<void> updateCarDatasource(int id, CarModel car) async {
     await api.put(
