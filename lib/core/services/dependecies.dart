@@ -13,7 +13,7 @@ final getIt = GetIt.instance;
   preferRelativeImports: true,
   asExtension: true,
 )
-void configureDependencies() => getIt.initGetIt();
+Future<void> configureDependencies() async => await getIt.initGetIt();
 
 @module
 abstract class InjectionModule {

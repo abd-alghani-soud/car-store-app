@@ -1,11 +1,11 @@
-import 'package:car_store_app/core/route/app_route.dart';
 import 'package:car_store_app/core/services/dependecies.dart';
+import 'package:car_store_app/features/main/presentation/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   configureDependencies();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
