@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -12,7 +13,7 @@ final getIt = GetIt.instance;
   preferRelativeImports: true,
   asExtension: true,
 )
-void configureDependencies() => getIt.initGetIt();
+Future<void> configureDependencies() async => await getIt.initGetIt();
 
 @module
 abstract class InjectionModule {
@@ -22,6 +23,9 @@ abstract class InjectionModule {
 
   @lazySingleton
   http.Client get httpClient => http.Client();
+
+  @lazySingleton
+  Dio get dio => Dio();
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
