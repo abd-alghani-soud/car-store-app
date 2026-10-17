@@ -5,7 +5,9 @@ import 'package:car_store_app/features/home/data/model/brand_model.dart';
 import 'package:car_store_app/features/home/domain/entity/brand_entity.dart';
 import 'package:car_store_app/features/home/domain/repository/brand_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: BrandRepo)
 class BrandRepoImp implements BrandRepo {
   final BrandsRemoteDatasource data;
 
@@ -18,9 +20,9 @@ class BrandRepoImp implements BrandRepo {
       final response = await data.getAllBrandsDatasource();
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -31,9 +33,9 @@ class BrandRepoImp implements BrandRepo {
       final response = await data.getBrandByIdDatasource(id);
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -52,9 +54,9 @@ class BrandRepoImp implements BrandRepo {
       final response = await data.createBrandDatasource(brandModel);
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -65,9 +67,9 @@ class BrandRepoImp implements BrandRepo {
       await data.deleteBrandDatasource(id);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -86,9 +88,9 @@ class BrandRepoImp implements BrandRepo {
       await data.updateBrandDatasource(id, brandModel);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 }

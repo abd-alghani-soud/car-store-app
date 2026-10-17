@@ -5,11 +5,13 @@ import 'package:car_store_app/features/home/data/model/car_model.dart';
 import 'package:car_store_app/features/home/domain/entity/car_entity.dart';
 import 'package:car_store_app/features/home/domain/repository/car_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
+@Injectable(as: CarRepo)
 class CarRepoImp implements CarRepo {
   final CarsRemoteDatasource data;
 
-  CarRepoImp({required this.data});
+  CarRepoImp(this.data);
 
   // =================== getPublicCarsRepo ===================
   @override
@@ -18,9 +20,9 @@ class CarRepoImp implements CarRepo {
       final response = await data.getPublicCarsDatasource();
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -31,9 +33,9 @@ class CarRepoImp implements CarRepo {
       final response = await data.getCarByIdDatasource(id);
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -44,9 +46,9 @@ class CarRepoImp implements CarRepo {
       final response = await data.getCarImagesDatasource(id);
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -73,9 +75,9 @@ class CarRepoImp implements CarRepo {
       );
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -86,9 +88,9 @@ class CarRepoImp implements CarRepo {
       final response = await data.getMyCarsDatasource();
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -111,9 +113,9 @@ class CarRepoImp implements CarRepo {
       final response = await data.addCarDatasource(carModel);
       return Right(response);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -124,9 +126,9 @@ class CarRepoImp implements CarRepo {
       await data.deleteCarDatasource(id);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -149,9 +151,9 @@ class CarRepoImp implements CarRepo {
       await data.updateCarDatasource(id, carModel);
       return const Right(null);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 }

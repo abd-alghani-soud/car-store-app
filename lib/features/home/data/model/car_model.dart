@@ -1,4 +1,5 @@
 import 'package:car_store_app/features/home/domain/entity/car_entity.dart';
+import 'package:flutter/foundation.dart';
 
 class CarModel extends CarEntity {
   const CarModel({
@@ -13,6 +14,11 @@ class CarModel extends CarEntity {
   });
 
   factory CarModel.fromJson(Map<String, dynamic> json) {
+    String imageUrl = json['imageUrl'] ?? json['image'] ?? '';
+    debugPrint('=== API Car Image Received: $imageUrl ===');
+    if (imageUrl.startsWith('/')) {
+      imageUrl = 'http://10.0.2.2:5222$imageUrl';
+    }
     return CarModel(
       id: json['carId'] ?? json['id'] ?? 0,
       name: json['model'] ?? json['name'] ?? '',
@@ -21,7 +27,7 @@ class CarModel extends CarEntity {
       rating: (json['rating'] ?? 4.8).toDouble(),
       reviews: json['reviewsCount'] ?? json['reviews'] ?? 150,
       transmission: json['gearType'] ?? json['transmission'] ?? 'Automatic',
-      image: json['imageUrl'] ?? json['image'] ?? 'assets/images/random/ii.png',
+      image: imageUrl.isNotEmpty ? imageUrl : 'assets/images/random/ii.png',
     );
   }
 }

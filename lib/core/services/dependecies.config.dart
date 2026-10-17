@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
@@ -17,8 +18,44 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../features/home/data/datasource/brands_remote_datasource.dart'
+    as _i817;
+import '../../features/home/data/datasource/cars_remote_datasource.dart'
+    as _i242;
+import '../../features/home/data/repository/brand_repo_imp.dart' as _i880;
+import '../../features/home/data/repository/car_repo_imp.dart' as _i376;
+import '../../features/home/domain/repository/brand_repo.dart' as _i656;
+import '../../features/home/domain/repository/car_repo.dart' as _i288;
+import '../../features/home/domain/usecase/brands/create_brand_usecase.dart'
+    as _i571;
+import '../../features/home/domain/usecase/brands/delete_brand_usecase.dart'
+    as _i945;
+import '../../features/home/domain/usecase/brands/get_all_brands_usecase.dart'
+    as _i829;
+import '../../features/home/domain/usecase/brands/get_brand_by_id_usecase.dart'
+    as _i535;
+import '../../features/home/domain/usecase/brands/update_brand_usecase.dart'
+    as _i315;
+import '../../features/home/domain/usecase/cars/add_car_usecase.dart' as _i220;
+import '../../features/home/domain/usecase/cars/delete_car_usecase.dart'
+    as _i933;
+import '../../features/home/domain/usecase/cars/get_car_by_id_usecase.dart'
+    as _i727;
+import '../../features/home/domain/usecase/cars/get_car_images_usecase.dart'
+    as _i983;
+import '../../features/home/domain/usecase/cars/get_my_cars_usecase.dart'
+    as _i408;
+import '../../features/home/domain/usecase/cars/get_public_cars_usecase.dart'
+    as _i352;
+import '../../features/home/domain/usecase/cars/search_cars_usecase.dart'
+    as _i939;
+import '../../features/home/domain/usecase/cars/update_car_usecase.dart'
+    as _i493;
+import '../../features/home/presentation/bloc/brands/brands_bloc.dart' as _i950;
+import '../../features/home/presentation/bloc/cars/cars_bloc.dart' as _i447;
 import '../cubit/theme_cubit.dart' as _i319;
 import '../network/network_checker.dart' as _i387;
+import 'api_service.dart' as _i738;
 import 'dependecies.dart' as _i1048;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -38,8 +75,82 @@ extension GetItInjectableX on _i174.GetIt {
       () => injectionModule.connectionChecker,
     );
     gh.lazySingleton<_i519.Client>(() => injectionModule.httpClient);
+    gh.lazySingleton<_i361.Dio>(() => injectionModule.dio);
     gh.factory<_i387.NetworkChecker>(
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
+    );
+    gh.lazySingleton<_i738.ApiService>(() => _i738.ApiService(gh<_i361.Dio>()));
+    gh.factory<_i817.BrandsRemoteDatasource>(
+      () => _i817.BrandsRemoteDatasourceImp(apiService: gh<_i738.ApiService>()),
+    );
+    gh.factory<_i242.CarsRemoteDatasource>(
+      () => _i242.CarsRemoteDatasourceImp(gh<_i738.ApiService>()),
+    );
+    gh.factory<_i288.CarRepo>(
+      () => _i376.CarRepoImp(gh<_i242.CarsRemoteDatasource>()),
+    );
+    gh.factory<_i656.BrandRepo>(
+      () => _i880.BrandRepoImp(gh<_i817.BrandsRemoteDatasource>()),
+    );
+    gh.factory<_i220.AddCarUsecase>(
+      () => _i220.AddCarUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i933.DeleteCarUsecase>(
+      () => _i933.DeleteCarUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i727.GetCarByIdUsecase>(
+      () => _i727.GetCarByIdUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i983.GetCarImagesUsecase>(
+      () => _i983.GetCarImagesUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i408.GetMyCarsUsecase>(
+      () => _i408.GetMyCarsUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i352.GetPublicCarsUseCase>(
+      () => _i352.GetPublicCarsUseCase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i939.SearchCarsUsecase>(
+      () => _i939.SearchCarsUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i493.UpdateCarUsecase>(
+      () => _i493.UpdateCarUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.factory<_i571.CreateBrandUsecase>(
+      () => _i571.CreateBrandUsecase(gh<_i656.BrandRepo>()),
+    );
+    gh.factory<_i945.DeleteBrandUsecase>(
+      () => _i945.DeleteBrandUsecase(gh<_i656.BrandRepo>()),
+    );
+    gh.factory<_i829.GetAllBrandsUsecase>(
+      () => _i829.GetAllBrandsUsecase(gh<_i656.BrandRepo>()),
+    );
+    gh.factory<_i535.GetBrandByIdUsecase>(
+      () => _i535.GetBrandByIdUsecase(gh<_i656.BrandRepo>()),
+    );
+    gh.factory<_i315.UpdateBrandUsecase>(
+      () => _i315.UpdateBrandUsecase(gh<_i656.BrandRepo>()),
+    );
+    gh.lazySingleton<_i447.CarsBloc>(
+      () => _i447.CarsBloc(
+        gh<_i352.GetPublicCarsUseCase>(),
+        gh<_i727.GetCarByIdUsecase>(),
+        gh<_i983.GetCarImagesUsecase>(),
+        gh<_i939.SearchCarsUsecase>(),
+        gh<_i408.GetMyCarsUsecase>(),
+        gh<_i220.AddCarUsecase>(),
+        gh<_i933.DeleteCarUsecase>(),
+        gh<_i493.UpdateCarUsecase>(),
+      ),
+    );
+    gh.lazySingleton<_i950.BrandsBloc>(
+      () => _i950.BrandsBloc(
+        gh<_i829.GetAllBrandsUsecase>(),
+        gh<_i535.GetBrandByIdUsecase>(),
+        gh<_i571.CreateBrandUsecase>(),
+        gh<_i945.DeleteBrandUsecase>(),
+        gh<_i315.UpdateBrandUsecase>(),
+      ),
     );
     return this;
   }
