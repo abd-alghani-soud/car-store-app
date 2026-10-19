@@ -1,3 +1,5 @@
+import 'package:car_store_app/core/enums/status_enum.dart';
+import 'package:car_store_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -5,29 +7,28 @@ import '../../../../core/constants/my_color.dart';
 import '../../../../core/widgets/error_message_widget.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../core/widgets/main_button.dart';
-import '../manager/signup_Cubit/signup_cubit.dart';
 
 class SignupSubmitButton extends StatelessWidget {
-  final SignupCubit signupCubit;
+  final AuthCubit authCubit;
   final VoidCallback onPressed;
 
   const SignupSubmitButton({
     super.key,
-    required this.signupCubit,
+    required this.authCubit,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignupCubit, SignupState>(
-      bloc: signupCubit,
+    return BlocConsumer<AuthCubit, AuthState>(
+      bloc: authCubit,
       listener: (context, state) {
-        if (state is SignupSuccess) {
+        if (state.signupStatus == StatusEnum.success) {
           GoRouter.of(context).pop();
         }
       },
       builder: (context, state) {
-        final bool isLoading = state is SignupLoading;
+        final bool isLoading = state.signupStatus == StatusEnum.loading;
 
         if (isLoading) {
           return LoadingWidget();
@@ -35,8 +36,8 @@ class SignupSubmitButton extends StatelessWidget {
 
         return Column(
           children: [
-            if (state is SignupFailure) ...[
-              ErrorMessageWidget(messageError: state.errMessage),
+            if (state.signupStatus == StatusEnum.failure) ...[
+              ErrorMessageWidget(messageError: state.messageError!),
               SizedBox(height: 16),
             ],
             MainButton(

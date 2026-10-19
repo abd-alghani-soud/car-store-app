@@ -1,10 +1,10 @@
+import 'package:car_store_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:car_store_app/features/auth/presentation/widgets/signup_submit_button.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/component/function/app_validate.dart';
 import '../../../../core/constants/my_color.dart';
 import '../../../../core/services/dependecies.dart';
 import '../../../../core/widgets/main_text_field.dart';
-import '../manager/signup_Cubit/signup_cubit.dart';
 
 class SignupFormSection extends StatefulWidget {
   const SignupFormSection({super.key});
@@ -14,7 +14,7 @@ class SignupFormSection extends StatefulWidget {
 }
 
 class _SignupFormSectionState extends State<SignupFormSection> {
-  late SignupCubit signupCubit;
+  late AuthCubit authCubit;
   final _fromKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -24,13 +24,13 @@ class _SignupFormSectionState extends State<SignupFormSection> {
 
   @override
   void initState() {
-    signupCubit = getIt.get<SignupCubit>();
+    authCubit = getIt.get<AuthCubit>();
     super.initState();
   }
 
   @override
   void dispose() {
-    signupCubit.close();
+    authCubit.close();
     _emailController.dispose();
     _passwordController.dispose();
     _phoneController.dispose();
@@ -124,10 +124,10 @@ class _SignupFormSectionState extends State<SignupFormSection> {
           ),
           SizedBox(height: 62),
           SignupSubmitButton(
-            signupCubit: signupCubit,
+            authCubit: authCubit,
             onPressed: () {
               if (_fromKey.currentState!.validate()) {
-                signupCubit.signup(
+                authCubit.signup(
                   fullName: _fullNameController.text,
                   email: _emailController.text,
                   password: _passwordController.text,

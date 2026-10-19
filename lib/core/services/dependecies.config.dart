@@ -24,10 +24,8 @@ import '../../features/auth/data/repositories/auth_repo_impl.dart' as _i662;
 import '../../features/auth/domain/repositories/auth_repo.dart' as _i723;
 import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
 import '../../features/auth/domain/usecases/signup_use_case.dart' as _i229;
-import '../../features/auth/presentation/manager/login_cubit/login_cubit.dart'
-    as _i863;
-import '../../features/auth/presentation/manager/signup_Cubit/signup_cubit.dart'
-    as _i81;
+import '../../features/auth/presentation/manager/auth_cubit/auth_cubit.dart'
+    as _i343;
 import '../../features/home/data/datasource/brands_remote_datasource.dart'
     as _i817;
 import '../../features/home/data/datasource/cars_remote_datasource.dart'
@@ -142,6 +140,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i229.SignupUseCase>(
       () => _i229.SignupUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
+    gh.factory<_i343.AuthCubit>(
+      () => _i343.AuthCubit(
+        signupUseCase: gh<_i229.SignupUseCase>(),
+        loginUseCase: gh<_i37.LoginUseCase>(),
+      ),
+    );
     gh.factory<_i571.CreateBrandUsecase>(
       () => _i571.CreateBrandUsecase(gh<_i656.BrandRepo>()),
     );
@@ -177,12 +181,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i945.DeleteBrandUsecase>(),
         gh<_i315.UpdateBrandUsecase>(),
       ),
-    );
-    gh.factory<_i863.LoginCubit>(
-      () => _i863.LoginCubit(loginUseCase: gh<_i37.LoginUseCase>()),
-    );
-    gh.factory<_i81.SignupCubit>(
-      () => _i81.SignupCubit(signupUseCase: gh<_i229.SignupUseCase>()),
     );
     return this;
   }

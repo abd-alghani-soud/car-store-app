@@ -1,5 +1,5 @@
 import 'package:car_store_app/core/services/dependecies.dart';
-import 'package:car_store_app/features/auth/presentation/manager/login_cubit/login_cubit.dart';
+import 'package:car_store_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:car_store_app/features/auth/presentation/widgets/login_submit_button.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/component/function/app_validate.dart';
@@ -14,20 +14,20 @@ class LoginFormSection extends StatefulWidget {
 }
 
 class _LoginFormSectionState extends State<LoginFormSection> {
-  late LoginCubit loginCubit;
+  late AuthCubit authCubit;
   final _fromKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
-    loginCubit = getIt.get<LoginCubit>();
+    authCubit = getIt.get<AuthCubit>();
     super.initState();
   }
 
   @override
   void dispose() {
-    loginCubit.close();
+    authCubit.close();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -72,10 +72,10 @@ class _LoginFormSectionState extends State<LoginFormSection> {
           ),
           SizedBox(height: 62),
           LoginSubmitButton(
-            loginCubit: loginCubit,
+            authCubit: authCubit,
             onPressed: () {
               if (_fromKey.currentState!.validate()) {
-                loginCubit.login(
+                authCubit.login(
                   email: _emailController.text,
                   password: _passwordController.text,
                 );
