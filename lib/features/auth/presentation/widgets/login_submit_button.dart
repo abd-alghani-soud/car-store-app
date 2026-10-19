@@ -25,7 +25,7 @@ class LoginSubmitButton extends StatelessWidget {
       bloc: authCubit,
       listener: (context, state) {
         if (state.loginStatus == StatusEnum.success) {
-          GoRouter.of(context).go(AppRoute.kHomePage);
+          GoRouter.of(context).go(AppRoute.kMainPage);
         }
       },
       builder: (context, state) {

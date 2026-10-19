@@ -1,4 +1,4 @@
-import 'package:car_store_app/core/services/api.dart';
+import 'package:car_store_app/core/services/api_service.dart';
 import 'package:car_store_app/features/auth/data/models/login_model.dart';
 import 'package:car_store_app/features/auth/data/models/signup_model.dart';
 import 'package:car_store_app/features/auth/domain/entities/login_entity.dart';
@@ -20,16 +20,16 @@ abstract class AuthRemoteDataSource {
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
-  final Api api;
+  final ApiService apiService;
 
-  AuthRemoteDataSourceImpl({required this.api});
+  AuthRemoteDataSourceImpl({required this.apiService});
 
   @override
   Future<LoginEntity> login({
     required String email,
     required String password,
   }) async {
-    var data = await api.post(
+    var data = await apiService.post(
       endPoint: 'Auth/login',
       data: {"email": email, "password": password},
     );
@@ -47,7 +47,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     required String phone,
     required String role,
   }) async {
-    var data = await api.post(
+    var data = await apiService.post(
       endPoint: 'Auth/register',
       data: {
         "fullName": fullName,

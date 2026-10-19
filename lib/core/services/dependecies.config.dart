@@ -63,7 +63,6 @@ import '../../features/home/presentation/bloc/brands/brands_bloc.dart' as _i950;
 import '../../features/home/presentation/bloc/cars/cars_bloc.dart' as _i447;
 import '../cubit/theme_cubit.dart' as _i319;
 import '../network/network_checker.dart' as _i387;
-import 'api.dart' as _i937;
 import 'api_service.dart' as _i738;
 import 'dependecies.dart' as _i1048;
 
@@ -88,16 +87,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i387.NetworkChecker>(
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
     );
-    gh.factory<_i937.Api>(() => _i937.Api(gh<_i361.Dio>()));
     gh.lazySingleton<_i738.ApiService>(() => _i738.ApiService(gh<_i361.Dio>()));
+    gh.lazySingleton<_i107.AuthRemoteDataSource>(
+      () => _i107.AuthRemoteDataSourceImpl(apiService: gh<_i738.ApiService>()),
+    );
     gh.factory<_i817.BrandsRemoteDatasource>(
       () => _i817.BrandsRemoteDatasourceImp(apiService: gh<_i738.ApiService>()),
     );
     gh.factory<_i242.CarsRemoteDatasource>(
       () => _i242.CarsRemoteDatasourceImp(gh<_i738.ApiService>()),
-    );
-    gh.lazySingleton<_i107.AuthRemoteDataSource>(
-      () => _i107.AuthRemoteDataSourceImpl(api: gh<_i937.Api>()),
     );
     gh.factory<_i288.CarRepo>(
       () => _i376.CarRepoImp(gh<_i242.CarsRemoteDatasource>()),
