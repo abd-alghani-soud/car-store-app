@@ -1,3 +1,4 @@
+import 'package:car_store_app/core/enums/status_enum.dart';
 import 'package:car_store_app/core/route/app_route.dart';
 import 'package:car_store_app/core/widgets/error_message_widget.dart';
 import 'package:car_store_app/core/widgets/loading_widget.dart';
@@ -23,21 +24,19 @@ class LoginSubmitButton extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       bloc: loginCubit,
       listener: (context, state) {
-        if (state is LoginSuccess) {
-          if (context.mounted) {
-            GoRouter.of(context).go(AppRoute.kSignupPage);
-          }
+        if (state.loginStatus == StatusEnum.success) {
+          GoRouter.of(context).go(AppRoute.kHomePage);
         }
       },
       builder: (context, state) {
-        final isLoading = state is LoginLoading;
+        final isLoading = state.loginStatus == StatusEnum.loading;
         if (isLoading) {
           return LoadingWidget();
         }
         return Column(
           children: [
-            if (state is LoginFailure) ...[
-              ErrorMessageWidget(messageError: state.errMessage),
+            if (state.loginStatus == StatusEnum.failure) ...[
+              ErrorMessageWidget(messageError: state.messageError!),
               SizedBox(height: 16),
             ],
             MainButton(

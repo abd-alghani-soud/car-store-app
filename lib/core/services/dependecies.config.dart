@@ -18,6 +18,16 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../features/auth/data/datasources/auth_remote_data_source.dart'
+    as _i107;
+import '../../features/auth/data/repositories/auth_repo_impl.dart' as _i662;
+import '../../features/auth/domain/repositories/auth_repo.dart' as _i723;
+import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
+import '../../features/auth/domain/usecases/signup_use_case.dart' as _i229;
+import '../../features/auth/presentation/manager/login_cubit/login_cubit.dart'
+    as _i863;
+import '../../features/auth/presentation/manager/signup_Cubit/signup_cubit.dart'
+    as _i81;
 import '../../features/home/data/datasource/brands_remote_datasource.dart'
     as _i817;
 import '../../features/home/data/datasource/cars_remote_datasource.dart'
@@ -55,6 +65,7 @@ import '../../features/home/presentation/bloc/brands/brands_bloc.dart' as _i950;
 import '../../features/home/presentation/bloc/cars/cars_bloc.dart' as _i447;
 import '../cubit/theme_cubit.dart' as _i319;
 import '../network/network_checker.dart' as _i387;
+import 'api.dart' as _i937;
 import 'api_service.dart' as _i738;
 import 'dependecies.dart' as _i1048;
 
@@ -79,12 +90,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i387.NetworkChecker>(
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
     );
+    gh.factory<_i937.Api>(() => _i937.Api(gh<_i361.Dio>()));
     gh.lazySingleton<_i738.ApiService>(() => _i738.ApiService(gh<_i361.Dio>()));
     gh.factory<_i817.BrandsRemoteDatasource>(
       () => _i817.BrandsRemoteDatasourceImp(apiService: gh<_i738.ApiService>()),
     );
     gh.factory<_i242.CarsRemoteDatasource>(
       () => _i242.CarsRemoteDatasourceImp(gh<_i738.ApiService>()),
+    );
+    gh.lazySingleton<_i107.AuthRemoteDataSource>(
+      () => _i107.AuthRemoteDataSourceImpl(api: gh<_i937.Api>()),
     );
     gh.factory<_i288.CarRepo>(
       () => _i376.CarRepoImp(gh<_i242.CarsRemoteDatasource>()),
@@ -115,6 +130,17 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i493.UpdateCarUsecase>(
       () => _i493.UpdateCarUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.lazySingleton<_i723.AuthRepo>(
+      () => _i662.AuthRepoImpl(
+        authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i37.LoginUseCase>(
+      () => _i37.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i229.SignupUseCase>(
+      () => _i229.SignupUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
     gh.factory<_i571.CreateBrandUsecase>(
       () => _i571.CreateBrandUsecase(gh<_i656.BrandRepo>()),
@@ -151,6 +177,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i945.DeleteBrandUsecase>(),
         gh<_i315.UpdateBrandUsecase>(),
       ),
+    );
+    gh.factory<_i863.LoginCubit>(
+      () => _i863.LoginCubit(loginUseCase: gh<_i37.LoginUseCase>()),
+    );
+    gh.factory<_i81.SignupCubit>(
+      () => _i81.SignupCubit(signupUseCase: gh<_i229.SignupUseCase>()),
     );
     return this;
   }
