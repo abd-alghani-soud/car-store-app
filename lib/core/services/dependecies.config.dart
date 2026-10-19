@@ -18,6 +18,14 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../features/auth/data/datasources/auth_remote_data_source.dart'
+    as _i107;
+import '../../features/auth/data/repositories/auth_repo_impl.dart' as _i662;
+import '../../features/auth/domain/repositories/auth_repo.dart' as _i723;
+import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
+import '../../features/auth/domain/usecases/signup_use_case.dart' as _i229;
+import '../../features/auth/presentation/manager/auth_cubit/auth_cubit.dart'
+    as _i343;
 import '../../features/home/data/datasource/brands_remote_datasource.dart'
     as _i817;
 import '../../features/home/data/datasource/cars_remote_datasource.dart'
@@ -80,6 +88,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
     );
     gh.lazySingleton<_i738.ApiService>(() => _i738.ApiService(gh<_i361.Dio>()));
+    gh.lazySingleton<_i107.AuthRemoteDataSource>(
+      () => _i107.AuthRemoteDataSourceImpl(apiService: gh<_i738.ApiService>()),
+    );
     gh.factory<_i817.BrandsRemoteDatasource>(
       () => _i817.BrandsRemoteDatasourceImp(apiService: gh<_i738.ApiService>()),
     );
@@ -115,6 +126,23 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i493.UpdateCarUsecase>(
       () => _i493.UpdateCarUsecase(gh<_i288.CarRepo>()),
+    );
+    gh.lazySingleton<_i723.AuthRepo>(
+      () => _i662.AuthRepoImpl(
+        authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i37.LoginUseCase>(
+      () => _i37.LoginUseCase(authRepo: gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i229.SignupUseCase>(
+      () => _i229.SignupUseCase(authRepo: gh<_i723.AuthRepo>()),
+    );
+    gh.factory<_i343.AuthCubit>(
+      () => _i343.AuthCubit(
+        signupUseCase: gh<_i229.SignupUseCase>(),
+        loginUseCase: gh<_i37.LoginUseCase>(),
+      ),
     );
     gh.factory<_i571.CreateBrandUsecase>(
       () => _i571.CreateBrandUsecase(gh<_i656.BrandRepo>()),

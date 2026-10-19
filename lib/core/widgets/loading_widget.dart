@@ -1,3 +1,4 @@
+import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -10,7 +11,7 @@ class LoadingWidget extends StatelessWidget {
       alignment: AlignmentGeometry.bottomCenter,
       child: Center(
         child: SpinKitFadingCircle(
-          color: Color(0xFF064D3B),
+          color:MyColor.primaryColor,
           size: 60.0,
         ),
       ),

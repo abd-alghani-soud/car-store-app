@@ -95,8 +95,8 @@ class MainButton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (icon != null) icon!,
-                  SizedBox(width: 16.w,),
+                  if (icon != null) ...[icon!,
+                  SizedBox(width: 16.w,)],
                   Text(
                     text,
                     maxLines: 1,

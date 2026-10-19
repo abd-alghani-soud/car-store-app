@@ -7,42 +7,41 @@ import '../extensions/context_extensions.dart';
 import '../extensions/widget_extensions.dart';
 
 class MainTextField extends StatefulWidget {
-  const MainTextField(
-      {super.key,
-      this.hintTextStyle,
-      this.borderColor,
-      this.onChanged,
-      this.prefixIcon,
-      this.inputFormatter,
-      this.suffixIcon,
-      this.validator,
-      this.keyboardType = TextInputType.text,
-      this.textInputAction = TextInputAction.next,
-      this.isPassword = false,
-      this.enabled = true,
-      this.autoFocus = false,
-      this.error = false,
-      this.smallSuffixIcon = false,
-      this.borderRadius,
-      this.maxLines = 1,
-      this.hintColor,
-      this.width,
-      this.height,
-      this.label,
-      this.fillColor,
-      this.hint,
-      this.onSubmitted,
-      this.controller,
-      this.autovalidateMode = AutovalidateMode.onUserInteraction,
-      this.contentPadding,
-      this.textAlign = TextAlign.start,
-      this.hasDropDown = false,
-      this.hintSize,
-      this.readOnly = false,
-      this.text,
-      this.hasPoint = false,
-      this.code,
-      this.countryCode});
+  const MainTextField({super.key,
+    this.hintTextStyle,
+    this.borderColor,
+    this.onChanged,
+    this.prefixIcon,
+    this.inputFormatter,
+    this.suffixIcon,
+    this.validator,
+    this.keyboardType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.isPassword = false,
+    this.enabled = true,
+    this.autoFocus = false,
+    this.error = false,
+    this.smallSuffixIcon = false,
+    this.borderRadius,
+    this.maxLines = 1,
+    this.hintColor,
+    this.width,
+    this.height,
+    this.label,
+    this.fillColor,
+    this.hint,
+    this.onSubmitted,
+    this.controller,
+    this.autovalidateMode = AutovalidateMode.onUserInteraction,
+    this.contentPadding,
+    this.textAlign = TextAlign.start,
+    this.hasDropDown = false,
+    this.hintSize,
+    this.readOnly = false,
+    this.text,
+    this.hasPoint = false,
+    this.code,
+    this.countryCode});
 
   final ValueNotifier<String>? code;
   final ValueNotifier<String>? countryCode;
@@ -135,13 +134,13 @@ class _MainTextFieldState extends State<MainTextField>
               inputFormatters: widget.inputFormatter != null
                   ? [widget.inputFormatter!]
                   : widget.keyboardType == TextInputType.number
-                      ? !widget.hasPoint
-                          ? [FilteringTextInputFormatter.digitsOnly]
-                          : [
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d+\.?\d{0,2}')),
-                            ]
-                      : null,
+                  ? !widget.hasPoint
+                  ? [FilteringTextInputFormatter.digitsOnly]
+                  : [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'^\d+\.?\d{0,2}')),
+              ]
+                  : null,
               keyboardType: widget.keyboardType,
               maxLines: widget.maxLines,
               onChanged: widget.onChanged,
@@ -204,18 +203,19 @@ class _MainTextFieldState extends State<MainTextField>
                     color: widget.error
                         ? context.theme.colorScheme.error
                         : widget.borderColor ??
-                            context.theme.hintColor.withOpacity(.2),
+                        context.theme.hintColor.withOpacity(.2),
                   ),
                 ),
+
                 focusedBorder: OutlineInputBorder(
                   borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
                   borderSide: BorderSide(
                       color: widget.borderColor ??
                           context.theme.hintColor.withOpacity(.2)),
                 ),
-                constraints: BoxConstraints(
-                    maxHeight: widget.height ?? double.infinity,
-                    maxWidth: widget.width ?? double.infinity),
+                // constraints: BoxConstraints(
+                //     maxHeight: widget.height ?? double.infinity,
+                //     maxWidth: widget.width ?? double.infinity),
                 border: OutlineInputBorder(
                   borderRadius: widget.borderRadius ?? BorderRadius.circular(8),
                   borderSide: BorderSide(
@@ -229,13 +229,13 @@ class _MainTextFieldState extends State<MainTextField>
 
                 suffixIcon: widget.isPassword
                     ? (!obsecureValue
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off_rounded))
-                        .animate(key: UniqueKey())
-                        .animationSwitch()
-                        .onTap(() {
-                        _obscure.value = !obsecureValue;
-                      })
+                    ? Icon(Icons.visibility)
+                    : Icon(Icons.visibility_off_rounded))
+                    .animate(key: UniqueKey())
+                    .animationSwitch()
+                    .onTap(() {
+                  _obscure.value = !obsecureValue;
+                })
                     : widget.suffixIcon,
                 suffixIconConstraints: widget.smallSuffixIcon
                     ? BoxConstraints(maxWidth: .15.sw)
