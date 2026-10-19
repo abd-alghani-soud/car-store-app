@@ -1,3 +1,4 @@
+import 'package:car_store_app/core/error/exceptions.dart';
 import 'package:car_store_app/core/error/failures.dart';
 import 'package:car_store_app/features/auth/domain/entities/login_entity.dart';
 import 'package:car_store_app/features/auth/domain/entities/signup_entity.dart';
@@ -24,8 +25,10 @@ class AuthRepoImpl extends AuthRepo {
         password: password,
       );
       return right(loginEntity);
+    } on ServerException catch (e) {
+      return left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return left(ServerFailure(e.toString()));
+      return left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 
@@ -49,8 +52,10 @@ class AuthRepoImpl extends AuthRepo {
         role: role,
       );
       return right(signupEntity);
+    } on ServerException catch (e) {
+      return left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
-      return left(ServerFailure(e.toString()));
+      return left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
 }
