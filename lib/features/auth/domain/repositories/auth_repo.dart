@@ -4,7 +4,7 @@ import '../entities/login_entity.dart';
 import '../entities/signup_entity.dart';
 
 abstract class AuthRepo {
-  Future<Either<Failure, SignupEntity>> signup({
+  Future<Either<Failure, SignupEntity>> signupRepo({
     required String fullName,
     required String email,
     required String password,
@@ -13,7 +13,7 @@ abstract class AuthRepo {
     required String role,
   });
 
-  Future<Either<Failure, LoginEntity>> login({
+  Future<Either<Failure, LoginEntity>> loginRepo({
     required String email,
     required String password,
   });

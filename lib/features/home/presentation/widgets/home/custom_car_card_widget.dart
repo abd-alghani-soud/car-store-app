@@ -1,13 +1,14 @@
 import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:car_store_app/core/enums/status_enum.dart';
+import 'package:car_store_app/core/route/app_route.dart';
 import 'package:car_store_app/core/services/dependecies.dart';
 import 'package:car_store_app/core/widgets/error_message_widget.dart';
 import 'package:car_store_app/core/widgets/loading_widget.dart';
 import 'package:car_store_app/features/home/presentation/bloc/cars/cars_bloc.dart';
-import 'package:car_store_app/features/home/presentation/pages/all_cars_page.dart';
 import 'package:car_store_app/features/home/presentation/widgets/common/car_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomCarCardWidget extends StatelessWidget {
   const CustomCarCardWidget({super.key});
@@ -30,10 +31,7 @@ class CustomCarCardWidget extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AllCarsPage()),
-                );
+                context.push(AppRoute.kAllCarsPage);
               },
               child: const Text(
                 "View All",

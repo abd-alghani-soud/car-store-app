@@ -6,9 +6,9 @@ import 'package:car_store_app/features/auth/domain/entities/signup_entity.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<LoginEntity> login({required String email, required String password});
+  Future<LoginEntity> loginDatasource({required String email, required String password});
 
-  Future<SignupEntity> signup({
+  Future<SignupEntity> signupDatasource({
     required String fullName,
     required String email,
     required String password,
@@ -18,18 +18,19 @@ abstract class AuthRemoteDataSource {
   });
 }
 
-@LazySingleton(as: AuthRemoteDataSource)
+@Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   final ApiService apiService;
 
   AuthRemoteDataSourceImpl({required this.apiService});
 
+  // =================== login ===================
   @override
-  Future<LoginEntity> login({
+  Future<LoginEntity> loginDatasource({
     required String email,
     required String password,
   }) async {
-    var data = await apiService.post(
+    final data = await apiService.post(
       endPoint: 'Auth/login',
       data: {"email": email, "password": password},
     );
@@ -38,8 +39,9 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     return loginEntity;
   }
 
+  // =================== signup ===================
   @override
-  Future<SignupEntity> signup({
+  Future<SignupEntity> signupDatasource({
     required String fullName,
     required String email,
     required String password,
@@ -47,7 +49,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     required String phone,
     required String role,
   }) async {
-    var data = await apiService.post(
+    final data = await apiService.post(
       endPoint: 'Auth/register',
       data: {
         "fullName": fullName,

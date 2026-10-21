@@ -14,6 +14,6 @@ class LoginUseCase {
     required String email,
     required String password,
   }) async {
-    return await authRepo.login(email: email, password: password);
+    return await authRepo.loginRepo(email: email, password: password);
   }
 }

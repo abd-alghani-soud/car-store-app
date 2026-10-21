@@ -11,7 +11,7 @@ import '../../../domain/usecases/signup_use_case.dart';
 
 part 'auth_state.dart';
 
-@injectable
+@lazySingleton
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.signupUseCase, required this.loginUseCase})
     : super(AuthState());
@@ -29,7 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String role,
   }) async {
     emit(state.copyWith(signupStatus: StatusEnum.loading));
-    var result = await signupUseCase.call(
+    final result = await signupUseCase.call(
       fullName: fullName,
       email: email,
       password: password,
@@ -60,7 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
   //========================LoginCubit========================
   Future<void> login({required String email, required String password}) async {
     emit(state.copyWith(loginStatus: StatusEnum.loading));
-    var result = await loginUseCase.call(email: email, password: password);
+    final result = await loginUseCase.call(email: email, password: password);
     result.fold(
       (failure) {
         emit(

@@ -7,20 +7,21 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import '../datasources/auth_remote_data_source.dart';
 
-@LazySingleton(as: AuthRepo)
+@Injectable(as: AuthRepo)
 class AuthRepoImpl extends AuthRepo {
   final AuthRemoteDataSource authRemoteDataSource;
 
   AuthRepoImpl({required this.authRemoteDataSource});
 
+  // =================== login ===================
   @override
-  Future<Either<Failure, LoginEntity>> login({
+  Future<Either<Failure, LoginEntity>> loginRepo({
     required String email,
     required String password,
   }) async {
     try {
       LoginEntity loginEntity;
-      loginEntity = await authRemoteDataSource.login(
+      loginEntity = await authRemoteDataSource.loginDatasource(
         email: email,
         password: password,
       );
@@ -32,8 +33,9 @@ class AuthRepoImpl extends AuthRepo {
     }
   }
 
+  // =================== signup ===================
   @override
-  Future<Either<Failure, SignupEntity>> signup({
+  Future<Either<Failure, SignupEntity>> signupRepo({
     required String fullName,
     required String email,
     required String password,
@@ -43,7 +45,7 @@ class AuthRepoImpl extends AuthRepo {
   }) async {
     try {
       SignupEntity signupEntity;
-      signupEntity = await authRemoteDataSource.signup(
+      signupEntity = await authRemoteDataSource.signupDatasource(
         fullName: fullName,
         email: email,
         password: password,

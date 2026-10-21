@@ -1,6 +1,7 @@
 import 'package:car_store_app/core/constants/my_color.dart';
-import 'package:car_store_app/features/home/presentation/pages/car_details_page.dart';
+import 'package:car_store_app/core/route/app_route.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CarCardWidget extends StatelessWidget {
   final Map<String, dynamic> car;
@@ -20,12 +21,7 @@ class CarCardWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CarDetailsPage(carData: car),
-          ),
-        );
+        context.push(AppRoute.kCarDetailsPage, extra: car);
       },
       child: Container(
         margin: margin ?? const EdgeInsets.only(bottom: 16),

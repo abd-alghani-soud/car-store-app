@@ -18,7 +18,7 @@ class SignupUseCase {
     required String phone,
     required String role,
   }) async {
-    return await authRepo.signup(
+    return await authRepo.signupRepo(
       fullName: fullName,
       email: email,
       password: password,

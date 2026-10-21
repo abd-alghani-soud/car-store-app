@@ -88,7 +88,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
     );
     gh.lazySingleton<_i738.ApiService>(() => _i738.ApiService(gh<_i361.Dio>()));
-    gh.lazySingleton<_i107.AuthRemoteDataSource>(
+    gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(apiService: gh<_i738.ApiService>()),
     );
     gh.factory<_i817.BrandsRemoteDatasource>(
@@ -127,7 +127,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i493.UpdateCarUsecase>(
       () => _i493.UpdateCarUsecase(gh<_i288.CarRepo>()),
     );
-    gh.lazySingleton<_i723.AuthRepo>(
+    gh.factory<_i723.AuthRepo>(
       () => _i662.AuthRepoImpl(
         authRemoteDataSource: gh<_i107.AuthRemoteDataSource>(),
       ),
@@ -138,7 +138,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i229.SignupUseCase>(
       () => _i229.SignupUseCase(authRepo: gh<_i723.AuthRepo>()),
     );
-    gh.factory<_i343.AuthCubit>(
+    gh.lazySingleton<_i343.AuthCubit>(
       () => _i343.AuthCubit(
         signupUseCase: gh<_i229.SignupUseCase>(),
         loginUseCase: gh<_i37.LoginUseCase>(),
