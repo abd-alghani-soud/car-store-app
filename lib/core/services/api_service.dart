@@ -6,9 +6,9 @@ class ApiService {
   final Dio _dio;
 
   // Note: 10.0.2.2 is used for Android Emulator, 5222 is the ASP.NET Core backend port from launchSettings.json
-  final String _baseUrl = "http://10.0.2.2:5222/api";
+ // final String _baseUrl = "http://10.0.2.2:5222/api";
 
-  // final String _baseUrl = 'http://localhost:5222/api';
+   final String _baseUrl = 'http://localhost:5222/api';
   ApiService(this._dio);
 
   // =================== get ===================

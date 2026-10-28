@@ -1,4 +1,5 @@
 import 'package:car_store_app/core/constants/my_color.dart';
+import 'package:car_store_app/core/route/app_route.dart';
 import 'package:car_store_app/core/widgets/main_button.dart';
 import 'package:car_store_app/features/home/presentation/widgets/car_details/car_details_body_widget.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +8,7 @@ import 'package:go_router/go_router.dart';
 class CarDetailsPage extends StatelessWidget {
   final Map<String, dynamic> carData;
 
-  const CarDetailsPage({
-    super.key,
-    required this.carData,
-  });
+  const CarDetailsPage({super.key, required this.carData});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,11 @@ class CarDetailsPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: MyColor.textPrimary, size: 18),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: MyColor.textPrimary,
+            size: 18,
+          ),
           onPressed: () => context.pop(),
         ),
         title: Text(
@@ -81,7 +83,10 @@ class CarDetailsPage extends StatelessWidget {
                       ),
                       const TextSpan(
                         text: " / day",
-                        style: TextStyle(color: MyColor.textSecondary, fontSize: 13),
+                        style: TextStyle(
+                          color: MyColor.textSecondary,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
@@ -93,12 +98,7 @@ class CarDetailsPage extends StatelessWidget {
               child: MainButton(
                 text: "Book Now",
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Successfully booked $name!"),
-                      backgroundColor: MyColor.accentBlue,
-                    ),
-                  );
+                  GoRouter.of(context).push(AppRoute.kOrdersPage);
                 },
               ),
             ),
