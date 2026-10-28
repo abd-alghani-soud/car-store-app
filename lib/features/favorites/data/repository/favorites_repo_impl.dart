@@ -12,6 +12,8 @@ class FavoritesRepoImpl implements FavoritesRepo {
 
   FavoritesRepoImpl(this.dataSource);
 
+  // =================== getMyFavoritesRepo ===================
+
   @override
   Future<Either<Failure, List<CarEntity>>> getMyFavoritesRepo() async {
     try {
@@ -23,6 +25,8 @@ class FavoritesRepoImpl implements FavoritesRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
+
+  // =================== toggleFavoriteRepo ===================
 
   @override
   Future<Either<Failure, String>> toggleFavoriteRepo(int carId) async {
