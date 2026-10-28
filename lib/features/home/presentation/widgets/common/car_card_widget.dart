@@ -1,22 +1,27 @@
 import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:car_store_app/core/route/app_route.dart';
+import 'package:car_store_app/core/services/dependecies.dart';
+import 'package:car_store_app/features/favorites/presentation/bloc/favorite_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CarCardWidget extends StatelessWidget {
   final Map<String, dynamic> car;
   final EdgeInsetsGeometry? margin;
+  final VoidCallback? onFavoritePressed;
 
   const CarCardWidget({
     super.key,
     required this.car,
     this.margin,
+    this.onFavoritePressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final int carId = car["id"] ?? 0;
     final String imagePath = car["image"] ?? 'assets/images/random/ii.png';
-    debugPrint('=== CarCardWidget Image Path: $imagePath ===');
     final bool isNetworkImage = imagePath.startsWith('http');
 
     return GestureDetector(
@@ -50,7 +55,6 @@ class CarCardWidget extends StatelessWidget {
                           height: 140,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            debugPrint('=== Image.network Error: $error ===');
                             return Image.asset(
                               'assets/images/random/ii.png',
                               height: 140,
@@ -64,17 +68,37 @@ class CarCardWidget extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: MyColor.accentBlue.withOpacity(0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.favorite_border,
-                    color: MyColor.accentBlue,
-                    size: 18,
-                  ),
+                BlocBuilder<FavoriteBloc, FavoriteState>(
+                  bloc: getIt<FavoriteBloc>(),
+                  builder: (context, favState) {
+                    final bool isFav = carId > 0 &&
+                        favState.favorites.any((f) => f.id == carId);
+
+                    return GestureDetector(
+                      onTap: () {
+                        if (onFavoritePressed != null) {
+                          onFavoritePressed!();
+                        } else if (carId > 0) {
+                          getIt<FavoriteBloc>()
+                              .add(ToggleFavoriteEvent(carId: carId));
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: isFav
+                              ? Colors.red.withOpacity(0.15)
+                              : MyColor.accentBlue.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_border,
+                          color: isFav ? Colors.red : MyColor.accentBlue,
+                          size: 20,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -119,7 +143,10 @@ class CarCardWidget extends StatelessWidget {
                     const SizedBox(width: 4),
                     Text(
                       "(${car["reviews"] ?? 150} Reviews)",
-                      style: const TextStyle(color: MyColor.textSecondary, fontSize: 12),
+                      style: const TextStyle(
+                        color: MyColor.textSecondary,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -136,7 +163,10 @@ class CarCardWidget extends StatelessWidget {
                       ),
                       const TextSpan(
                         text: " / day",
-                        style: TextStyle(color: MyColor.textSecondary, fontSize: 12),
+                        style: TextStyle(
+                          color: MyColor.textSecondary,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),

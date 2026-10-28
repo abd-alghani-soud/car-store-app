@@ -27,6 +27,10 @@ class EmptyCacheFailure extends Failure {
 }
 
 String mapExceptionToMessage(dynamic e) {
+  if (e is String) {
+    return e;
+  }
+
   if (e is DioException) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
@@ -41,12 +45,10 @@ String mapExceptionToMessage(dynamic e) {
         final responseData = e.response?.data;
         print('error :$responseData');
 
-        // إذا كانت الاستجابة نصاً صريحاً (String) مثل ما يرسله الباك إند حالياً
         if (responseData is String) {
           return responseData;
         }
 
-        // إذا كانت الاستجابة عبارة عن JSON (Map)
         if (responseData is Map) {
           if (responseData.containsKey('message')) {
             return responseData['message'].toString();
@@ -61,7 +63,6 @@ String mapExceptionToMessage(dynamic e) {
     }
   }
 
-  // في حال كان Exception عادي
   final String errorStr = e.toString();
   if (errorStr.contains('Connection refused') ||
       errorStr.contains('SocketException') ||
