@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:car_store_app/core/enums/status_enum.dart';
-import 'package:car_store_app/features/home/domain/entity/car_entity.dart';
+import 'package:car_store_app/core/entities/car_entity.dart';
 import 'package:car_store_app/features/home/domain/usecase/cars/add_car_usecase.dart';
 import 'package:car_store_app/features/home/domain/usecase/cars/delete_car_usecase.dart';
 import 'package:car_store_app/features/home/domain/usecase/cars/get_car_by_id_usecase.dart';
