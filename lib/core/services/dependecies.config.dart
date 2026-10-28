@@ -26,6 +26,17 @@ import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
 import '../../features/auth/domain/usecases/signup_use_case.dart' as _i229;
 import '../../features/auth/presentation/manager/auth_cubit/auth_cubit.dart'
     as _i343;
+import '../../features/favorites/data/datasource/favorites_remote_datasource.dart'
+    as _i25;
+import '../../features/favorites/data/repository/favorites_repo_impl.dart'
+    as _i697;
+import '../../features/favorites/domain/repository/favorites_repo.dart'
+    as _i1005;
+import '../../features/favorites/domain/usecase/get_my_favorites_usecase.dart'
+    as _i623;
+import '../../features/favorites/domain/usecase/toggle_favorite_usecase.dart'
+    as _i692;
+import '../../features/favorites/presentation/bloc/favorite_bloc.dart' as _i866;
 import '../../features/home/data/datasource/brands_remote_datasource.dart'
     as _i817;
 import '../../features/home/data/datasource/cars_remote_datasource.dart'
@@ -88,6 +99,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i387.NetworkCheckerImp(gh<_i973.InternetConnectionChecker>()),
     );
     gh.lazySingleton<_i738.ApiService>(() => _i738.ApiService(gh<_i361.Dio>()));
+    gh.factory<_i25.FavoritesRemoteDatasource>(
+      () => _i25.FavoritesRemoteDatasourceImp(gh<_i738.ApiService>()),
+    );
     gh.factory<_i107.AuthRemoteDataSource>(
       () => _i107.AuthRemoteDataSourceImpl(apiService: gh<_i738.ApiService>()),
     );
@@ -102,6 +116,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i656.BrandRepo>(
       () => _i880.BrandRepoImp(gh<_i817.BrandsRemoteDatasource>()),
+    );
+    gh.factory<_i1005.FavoritesRepo>(
+      () => _i697.FavoritesRepoImpl(gh<_i25.FavoritesRemoteDatasource>()),
     );
     gh.factory<_i220.AddCarUsecase>(
       () => _i220.AddCarUsecase(gh<_i288.CarRepo>()),
@@ -144,6 +161,12 @@ extension GetItInjectableX on _i174.GetIt {
         loginUseCase: gh<_i37.LoginUseCase>(),
       ),
     );
+    gh.factory<_i623.GetMyFavoritesUseCase>(
+      () => _i623.GetMyFavoritesUseCase(gh<_i1005.FavoritesRepo>()),
+    );
+    gh.factory<_i692.ToggleFavoriteUseCase>(
+      () => _i692.ToggleFavoriteUseCase(gh<_i1005.FavoritesRepo>()),
+    );
     gh.factory<_i571.CreateBrandUsecase>(
       () => _i571.CreateBrandUsecase(gh<_i656.BrandRepo>()),
     );
@@ -178,6 +201,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i571.CreateBrandUsecase>(),
         gh<_i945.DeleteBrandUsecase>(),
         gh<_i315.UpdateBrandUsecase>(),
+      ),
+    );
+    gh.lazySingleton<_i866.FavoriteBloc>(
+      () => _i866.FavoriteBloc(
+        gh<_i623.GetMyFavoritesUseCase>(),
+        gh<_i692.ToggleFavoriteUseCase>(),
       ),
     );
     return this;

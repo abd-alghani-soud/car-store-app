@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:car_store_app/core/services/shared_preferences_service.dart';
 import 'package:car_store_app/features/auth/domain/usecases/login_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -70,7 +71,10 @@ class AuthCubit extends Cubit<AuthState> {
           ),
         );
       },
-      (loginInf) {
+      (loginInf) async {
+        if (loginInf.token.isNotEmpty) {
+          await SharedPreferencesService.storeToken(loginInf.token);
+        }
         emit(
           state.copyWith(loginInf: loginInf, loginStatus: StatusEnum.success),
         );

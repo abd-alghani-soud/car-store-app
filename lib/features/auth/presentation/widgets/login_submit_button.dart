@@ -1,5 +1,6 @@
 import 'package:car_store_app/core/enums/status_enum.dart';
 import 'package:car_store_app/core/route/app_route.dart';
+import 'package:car_store_app/core/services/shared_preferences_service.dart';
 import 'package:car_store_app/core/widgets/error_message_widget.dart';
 import 'package:car_store_app/core/widgets/loading_widget.dart';
 import 'package:car_store_app/features/auth/presentation/manager/auth_cubit/auth_cubit.dart';
@@ -23,21 +24,26 @@ class LoginSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       bloc: authCubit,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.loginStatus == StatusEnum.success) {
-          GoRouter.of(context).go(AppRoute.kMainPage);
+          if (state.loginInf != null && state.loginInf!.token.isNotEmpty) {
+            await SharedPreferencesService.storeToken(state.loginInf!.token);
+          }
+          if (context.mounted) {
+            GoRouter.of(context).go(AppRoute.kMainPage);
+          }
         }
       },
       builder: (context, state) {
         final isLoading = state.loginStatus == StatusEnum.loading;
         if (isLoading) {
-          return LoadingWidget();
+          return const LoadingWidget();
         }
         return Column(
           children: [
             if (state.loginStatus == StatusEnum.failure) ...[
               ErrorMessageWidget(messageError: state.messageError!),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
             MainButton(
               text: 'Login',

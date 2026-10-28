@@ -1,4 +1,5 @@
 import 'package:car_store_app/core/constants/my_color.dart';
+import 'package:car_store_app/features/favorites/presentation/pages/favorite_page.dart';
 import 'package:car_store_app/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,16 +10,7 @@ class MainPage extends StatelessWidget {
 
   final List<Widget> _pages = const [
     HomePage(),
-    Center(
-      child: Text(
-        'Bookmarks Page',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: MyColor.textPrimary,
-        ),
-      ),
-    ),
+    FavoritePage(),
     Center(
       child: Text(
         'Orders Page',
@@ -63,9 +55,9 @@ class MainPage extends StatelessWidget {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark_border),
-                activeIcon: Icon(Icons.bookmark),
-                label: 'Bookmarks',
+                icon: Icon(Icons.favorite_border),
+                activeIcon: Icon(Icons.favorite),
+                label: 'Favorites',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.receipt_long_outlined),

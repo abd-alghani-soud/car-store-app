@@ -1,4 +1,5 @@
 import 'package:car_store_app/core/services/dependecies.dart';
+import 'package:car_store_app/core/services/shared_preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/route/app_route.dart';
@@ -6,6 +7,7 @@ import 'core/route/app_route.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
+  await SharedPreferencesService.init();
   runApp(const MyApp());
 }
 
