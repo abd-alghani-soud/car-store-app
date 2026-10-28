@@ -1,7 +1,10 @@
 import 'package:car_store_app/core/constants/my_color.dart';
+import 'package:car_store_app/core/services/dependecies.dart';
 import 'package:car_store_app/core/widgets/main_button.dart';
+import 'package:car_store_app/features/favorites/presentation/bloc/favorite_bloc.dart';
 import 'package:car_store_app/features/home/presentation/widgets/car_details/car_details_body_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class CarDetailsPage extends StatelessWidget {
@@ -14,6 +17,7 @@ class CarDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int carId = carData["id"] ?? 0;
     final String name = carData["name"] ?? "Maserati 867";
     final num rawPrice = carData["price"] ?? 54;
     final int price = rawPrice.toInt();
@@ -37,9 +41,25 @@ class CarDetailsPage extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border, color: MyColor.accentBlue),
-            onPressed: () {},
+          BlocBuilder<FavoriteBloc, FavoriteState>(
+            bloc: getIt<FavoriteBloc>(),
+            builder: (context, favState) {
+              final bool isFav = carId > 0 &&
+                  favState.favorites.any((f) => f.id == carId);
+
+              return IconButton(
+                icon: Icon(
+                  isFav ? Icons.favorite : Icons.favorite_border,
+                  color: isFav ? Colors.red : MyColor.accentBlue,
+                ),
+                onPressed: () {
+                  if (carId > 0) {
+                    getIt<FavoriteBloc>()
+                        .add(ToggleFavoriteEvent(carId: carId));
+                  }
+                },
+              );
+            },
           ),
         ],
       ),

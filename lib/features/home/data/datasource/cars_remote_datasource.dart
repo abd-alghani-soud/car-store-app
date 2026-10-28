@@ -1,5 +1,5 @@
 import 'package:car_store_app/core/services/api_service.dart';
-import 'package:car_store_app/features/home/data/model/car_model.dart';
+import 'package:car_store_app/core/models/car_model.dart';
 import 'package:injectable/injectable.dart';
 
 // =================== CarsRemoteDatasource ===================
