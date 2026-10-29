@@ -38,7 +38,10 @@ abstract class AppRoute {
           return CarDetailsPage(carData: carData);
         },
       ),
-      GoRoute(path: kOrdersPage, builder: (context, state) => OrdersPage()),
+      GoRoute(path: kOrdersPage, builder: (context, state) {
+        final carId =state.extra as int;
+        return OrdersPage(carId: carId);
+      } ),
     ],
   );
 }

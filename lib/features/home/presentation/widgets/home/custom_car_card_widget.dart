@@ -72,6 +72,7 @@ class CustomCarCardWidget extends StatelessWidget {
               }
               final car = cars.first;
               final carMap = {
+                "carId":car.id,
                 "name": car.name,
                 "brand": car.brand,
                 "price": car.price,
