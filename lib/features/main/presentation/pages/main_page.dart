@@ -2,6 +2,8 @@ import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:car_store_app/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../../order/presentation/pages/my_order_page.dart';
+
 class MainPage extends StatelessWidget {
   MainPage({super.key});
 
@@ -19,16 +21,7 @@ class MainPage extends StatelessWidget {
         ),
       ),
     ),
-    Center(
-      child: Text(
-        'Orders Page',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: MyColor.textPrimary,
-        ),
-      ),
-    ),
+    MyOrderPage(),
     Center(
       child: Text(
         'Profile Page',
