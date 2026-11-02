@@ -91,9 +91,12 @@ class _OrdersPageBodyState extends State<OrdersPageBody> {
       case OrderType.rent:
         return RentFormWidget(carId: widget.carId, key: ValueKey('RentForm'));
       case OrderType.buy:
-        return const BuyFormWidget(key: ValueKey('BuyForm'));
+        return BuyFormWidget(carId: widget.carId, key: ValueKey('BuyForm'));
       case OrderType.installment:
-        return const InstallmentFormWidget(key: ValueKey('InstallmentForm'));
+        return InstallmentFormWidget(
+          carId: widget.carId,
+          key: ValueKey('InstallmentForm'),
+        );
     }
   }
 }

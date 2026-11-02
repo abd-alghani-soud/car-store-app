@@ -2,6 +2,7 @@ import 'package:car_store_app/core/widgets/main_button.dart';
 import 'package:car_store_app/features/order/presentation/widgets/custom_date_tile.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/my_color.dart';
+import '../../../../core/widgets/main_text_field.dart';
 
 class RentFormWidget extends StatefulWidget {
   final int carId;
@@ -65,6 +66,13 @@ class _RentFormWidgetState extends State<RentFormWidget> {
               : "${endDate!.year}-${endDate!.month.toString().padLeft(2, '0')}-${endDate!.day.toString().padLeft(2, '0')}",
           icon: Icons.event_available,
           onTap: () => _pickDate(context, isStart: false),
+        ),
+        const SizedBox(height: 12),
+        MainTextField(
+          label: 'Notes user',
+          hint: '(Optional)',
+          fillColor: MyColor.inputFill,
+          borderColor: MyColor.primaryColor,
         ),
         const SizedBox(height: 24),
         MainButton(
