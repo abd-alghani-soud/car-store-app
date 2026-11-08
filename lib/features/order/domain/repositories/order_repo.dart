@@ -26,7 +26,7 @@ abstract class OrderRepo {
   });
 
   // =================== cancelOrder ===================
-  Future<Either<Failure, OrderResponseEntity>> cancelOrder({
+  Future<Either<Failure, void>> cancelOrder({
     required int orderId,
   });
 
