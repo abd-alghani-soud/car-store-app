@@ -1,8 +1,10 @@
 import 'package:car_store_app/features/order/domain/repositories/order_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/order_response_entity.dart';
 
+@injectable
 class InstallmentOrderUseCase {
   final OrderRepo orderRepo;
 

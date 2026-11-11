@@ -61,6 +61,20 @@ import '../../features/home/domain/usecase/cars/update_car_usecase.dart'
     as _i493;
 import '../../features/home/presentation/bloc/brands/brands_bloc.dart' as _i950;
 import '../../features/home/presentation/bloc/cars/cars_bloc.dart' as _i447;
+import '../../features/order/data/datasource/order_remote_data_source.dart'
+    as _i744;
+import '../../features/order/data/repositories/order_repo_impl.dart' as _i1004;
+import '../../features/order/domain/repositories/order_repo.dart' as _i713;
+import '../../features/order/domain/usecases/buy_order_use_case.dart' as _i845;
+import '../../features/order/domain/usecases/cancel_order_use_case.dart'
+    as _i809;
+import '../../features/order/domain/usecases/get_my_order_use_case.dart'
+    as _i713;
+import '../../features/order/domain/usecases/installment_order_use_case.dart'
+    as _i705;
+import '../../features/order/domain/usecases/rent_order_use_case.dart' as _i867;
+import '../../features/order/presentation/manager/order_cubit/order_cubit.dart'
+    as _i665;
 import '../cubit/theme_cubit.dart' as _i319;
 import '../network/network_checker.dart' as _i387;
 import 'api_service.dart' as _i738;
@@ -97,8 +111,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i242.CarsRemoteDatasource>(
       () => _i242.CarsRemoteDatasourceImp(gh<_i738.ApiService>()),
     );
+    gh.factory<_i744.OrderRemoteDataSource>(
+      () => _i744.OrderRemoteDataSourceImpl(apiService: gh<_i738.ApiService>()),
+    );
     gh.factory<_i288.CarRepo>(
       () => _i376.CarRepoImp(gh<_i242.CarsRemoteDatasource>()),
+    );
+    gh.factory<_i713.OrderRepo>(
+      () => _i1004.OrderRepoImpl(
+        orderRemoteDataSource: gh<_i744.OrderRemoteDataSource>(),
+      ),
     );
     gh.factory<_i656.BrandRepo>(
       () => _i880.BrandRepoImp(gh<_i817.BrandsRemoteDatasource>()),
@@ -171,6 +193,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i493.UpdateCarUsecase>(),
       ),
     );
+    gh.factory<_i845.BuyOrderUseCase>(
+      () => _i845.BuyOrderUseCase(orderRepo: gh<_i713.OrderRepo>()),
+    );
+    gh.factory<_i809.CancelOrderUseCase>(
+      () => _i809.CancelOrderUseCase(orderRepo: gh<_i713.OrderRepo>()),
+    );
+    gh.factory<_i713.GetMyOrderUseCase>(
+      () => _i713.GetMyOrderUseCase(orderRepo: gh<_i713.OrderRepo>()),
+    );
+    gh.factory<_i705.InstallmentOrderUseCase>(
+      () => _i705.InstallmentOrderUseCase(orderRepo: gh<_i713.OrderRepo>()),
+    );
+    gh.factory<_i867.RentOrderUseCase>(
+      () => _i867.RentOrderUseCase(orderRepo: gh<_i713.OrderRepo>()),
+    );
     gh.lazySingleton<_i950.BrandsBloc>(
       () => _i950.BrandsBloc(
         gh<_i829.GetAllBrandsUsecase>(),
@@ -178,6 +215,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i571.CreateBrandUsecase>(),
         gh<_i945.DeleteBrandUsecase>(),
         gh<_i315.UpdateBrandUsecase>(),
+      ),
+    );
+    gh.lazySingleton<_i665.OrderCubit>(
+      () => _i665.OrderCubit(
+        buyOrderUseCase: gh<_i845.BuyOrderUseCase>(),
+        rentOrderUseCase: gh<_i867.RentOrderUseCase>(),
+        installmentOrderUseCase: gh<_i705.InstallmentOrderUseCase>(),
+        getMyOrderUseCase: gh<_i713.GetMyOrderUseCase>(),
+        cancelOrderUseCase: gh<_i809.CancelOrderUseCase>(),
       ),
     );
     return this;

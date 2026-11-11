@@ -1,6 +1,9 @@
 import 'package:car_store_app/core/services/api_service.dart';
+import 'package:car_store_app/core/services/shared_preferences_service.dart';
 import 'package:car_store_app/features/order/data/model/order_model.dart';
 import 'package:car_store_app/features/order/data/model/order_response_model.dart';
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 //===================OrderRemoteDataSource==================
 abstract class OrderRemoteDataSource {
@@ -27,8 +30,10 @@ abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getMyOrderDataSource();
 }
 
+@Injectable(as: OrderRemoteDataSource)
 class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
   final ApiService apiService;
+  final token = SharedPreferencesService.getToken();
 
   OrderRemoteDataSourceImpl({required this.apiService});
 
@@ -54,7 +59,10 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
   //===================getMyOrderDataSource==================
   @override
   Future<List<OrderModel>> getMyOrderDataSource() async {
-    final data = await apiService.get(endPoint: 'Orders/my-orders');
+    final data = await apiService.get(
+      endPoint: 'Orders/my-orders',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
     List<OrderModel> myOrders = [];
     for (var item in data) {
       myOrders.add(OrderModel.fromJson(item));

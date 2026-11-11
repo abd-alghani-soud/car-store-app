@@ -1,3 +1,5 @@
+import 'package:car_store_app/features/home/data/model/car_model.dart';
+import 'package:car_store_app/features/order/domain/entities/order_entity.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/my_color.dart';
 
@@ -8,13 +10,13 @@ class OrderCardWidget extends StatelessWidget {
     required this.onViewDetails,
   });
 
-  final Map<String, dynamic> order;
+  final OrderEntity? order;
   final VoidCallback onViewDetails;
 
   @override
   Widget build(BuildContext context) {
     Color statusColor;
-    switch (order['status']) {
+    switch (order!.orderStatus) {
       case 'Approved':
         statusColor = Colors.green;
         break;
@@ -47,7 +49,7 @@ class OrderCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                order['carName'],
+              order!.carName!,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -64,7 +66,7 @@ class OrderCardWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  order['status'],
+                  order!.orderStatus,
                   style: TextStyle(
                     color: statusColor,
                     fontWeight: FontWeight.bold,
@@ -76,12 +78,12 @@ class OrderCardWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            "Type: ${order['orderType']}",
+            "Type: ${order?.orderType}",
             style: TextStyle(color: MyColor.textSecondary, fontSize: 13),
           ),
           const SizedBox(height: 4),
           Text(
-            "Date: ${order['date']}",
+            "Date: ${order?.createdAt}",
             style: TextStyle(color: MyColor.textSecondary, fontSize: 13),
           ),
           const Divider(height: 20),
@@ -89,7 +91,7 @@ class OrderCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                order['price'],
+                order!.totalPrice.toString(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: MyColor.accentBlue,
@@ -105,5 +107,13 @@ class OrderCardWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+String getCarNameById(dynamic orderCarID,List<CarModel>allCars){
+  try{
+    CarModel matchedCar=allCars.firstWhere((car)=>car.id==orderCarID,);
+  return matchedCar.name;
+  }catch(e){
+    return 'unknown car';
   }
 }

@@ -4,14 +4,16 @@ import 'package:car_store_app/features/order/domain/entities/order_entity.dart';
 import 'package:car_store_app/features/order/domain/entities/order_response_entity.dart';
 import 'package:car_store_app/features/order/domain/repositories/order_repo.dart';
 import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exceptions.dart';
 
-class OrderRepoImpl implements OrderRepo {
+@Injectable(as: OrderRepo)
+class OrderRepoImpl extends OrderRepo {
   final OrderRemoteDataSource orderRemoteDataSource;
 
   OrderRepoImpl({required this.orderRemoteDataSource});
-
+//==================buyOrder==========================
   @override
   Future<Either<Failure, OrderResponseEntity>> buyOrder({
     required int carId,
@@ -29,7 +31,7 @@ class OrderRepoImpl implements OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-
+//========================cancelOrder=======================
   @override
   Future<Either<Failure, void>> cancelOrder({required int orderId}) async {
     try {
@@ -41,7 +43,7 @@ class OrderRepoImpl implements OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-
+//========================getMyOrder=========================
   @override
   Future<Either<Failure, List<OrderEntity>>> getMyOrder() async {
     try {
@@ -53,7 +55,7 @@ class OrderRepoImpl implements OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-
+//=========================installmentOrder=====================
   @override
   Future<Either<Failure, OrderResponseEntity>> installmentOrder({
     required int carId,
@@ -73,7 +75,7 @@ class OrderRepoImpl implements OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-
+//==============================rentOrder===========================
   @override
   Future<Either<Failure, OrderResponseEntity>> rentOrder({
     required int carId,

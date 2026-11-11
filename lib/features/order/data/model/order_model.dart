@@ -2,6 +2,7 @@ import '../../domain/entities/order_entity.dart';
 
 class OrderModel extends OrderEntity {
   final int orderId;
+  String? carName;
   final int userId;
   final int sellerId;
   final int carId;
@@ -20,6 +21,7 @@ class OrderModel extends OrderEntity {
     required this.userId,
     required this.sellerId,
     required this.carId,
+    this.carName,
     required this.orderType,
     required this.orderStatus,
     required this.totalPrice,

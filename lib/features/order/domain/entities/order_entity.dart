@@ -1,5 +1,6 @@
 class OrderEntity {
   final int orderId;
+  String? carName;
   final int userId;
   final int carId;
   final String? adminNotes;
@@ -17,5 +18,6 @@ class OrderEntity {
     required this.userId,
     required this.carId,
     required this.adminNotes,
+  this.carName,
   });
 }
