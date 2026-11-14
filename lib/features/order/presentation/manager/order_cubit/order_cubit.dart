@@ -16,7 +16,7 @@ import '../../../domain/usecases/buy_order_use_case.dart';
 
 part 'order_state.dart';
 
-@LazySingleton()
+@lazySingleton
 class OrderCubit extends Cubit<OrderState> {
   OrderCubit({
     required this.buyOrderUseCase,
@@ -36,7 +36,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(buyOrderStatus: StatusEnum.loading));
     final result = await buyOrderUseCase.call(
       carId: carId,
-      userNotes: userNotes,
+      userNotes: userNotes ?? '',
     );
     result.fold(
       (failure) {
@@ -176,5 +176,9 @@ class OrderCubit extends Cubit<OrderState> {
         emit(state.copyWith(cancelOrderStatus: StatusEnum.success));
       },
     );
+  }
+
+  void resetState() {
+    emit(state.copyWith(buyOrderStatus: StatusEnum.initial));
   }
 }

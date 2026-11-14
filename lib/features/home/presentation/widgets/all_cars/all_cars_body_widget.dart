@@ -98,6 +98,7 @@ class _AllCarsBodyWidgetState extends State<AllCarsBodyWidget> {
                           "reviews": car.reviews,
                           "transmission": car.transmission,
                           "image": car.image,
+                          "carId":car.id,
                         };
                         return CarCardWidget(car: carMap);
                       },

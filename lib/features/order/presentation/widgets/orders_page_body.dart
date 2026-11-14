@@ -1,6 +1,8 @@
 import 'package:car_store_app/features/order/presentation/widgets/rent_forn_widget.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/my_color.dart';
+import '../../../../core/services/dependecies.dart';
+import '../manager/order_cubit/order_cubit.dart';
 import '../pages/orders_page.dart';
 import 'buy_form_widget.dart';
 import 'installment_forn_widget.dart';
@@ -16,6 +18,14 @@ class OrdersPageBody extends StatefulWidget {
 
 class _OrdersPageBodyState extends State<OrdersPageBody> {
   OrderType selectedType = OrderType.rent;
+  late final OrderCubit _orderCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _orderCubit = getIt<OrderCubit>();
+    _orderCubit.resetState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +101,11 @@ class _OrdersPageBodyState extends State<OrdersPageBody> {
       case OrderType.rent:
         return RentFormWidget(carId: widget.carId, key: ValueKey('RentForm'));
       case OrderType.buy:
-        return BuyFormWidget(carId: widget.carId, key: ValueKey('BuyForm'));
+        return BuyFormWidget(
+          carId: widget.carId,
+          orderCubit: _orderCubit,
+          key: ValueKey('BuyForm'),
+        );
       case OrderType.installment:
         return InstallmentFormWidget(
           carId: widget.carId,

@@ -43,9 +43,13 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     required int carId,
     String? userNotes,
   }) async {
+    FormData fromData=FormData.fromMap({
+      'CarId': carId, 'UserNotes': userNotes,
+    });
     final data = await apiService.post(
       endPoint: 'Orders/buy',
-      data: {'CarId': carId, 'UserNotes': userNotes},
+      data: fromData,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
     return OrderResponseModel.fromJson(data);
   }
