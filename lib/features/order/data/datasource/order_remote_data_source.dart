@@ -43,8 +43,9 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     required int carId,
     String? userNotes,
   }) async {
-    FormData fromData=FormData.fromMap({
-      'CarId': carId, 'UserNotes': userNotes,
+    FormData fromData = FormData.fromMap({
+      'CarId': carId,
+      'UserNotes': userNotes,
     });
     final data = await apiService.post(
       endPoint: 'Orders/buy',
@@ -57,7 +58,10 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
   //===================cancelOrderDataSource==================
   @override
   Future<void> cancelOrderDataSource({required int orderId}) async {
-    await apiService.put(endPoint: 'Orders/${orderId}/cancel');
+    await apiService.put(
+      endPoint: 'Orders/${orderId}/cancel',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
   }
 
   //===================getMyOrderDataSource==================
@@ -81,13 +85,15 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     required int installmentMonth,
     String? userNotes,
   }) async {
+    FormData fromData = FormData.fromMap({
+      'CarId': carId,
+      'UserNotes': userNotes,
+      'installmentMonths': installmentMonth,
+    });
     final data = await apiService.post(
       endPoint: 'Orders/installment',
-      data: {
-        'CarId': carId,
-        'InstallmentMonths': installmentMonth,
-        'Notes': userNotes,
-      },
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: fromData,
     );
     return OrderResponseModel.fromJson(data);
   }
@@ -100,14 +106,16 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     required DateTime endDate,
     String? userNotes,
   }) async {
+    FormData fromData = FormData.fromMap({
+      'CarId': carId,
+      'UserNotes': userNotes,
+      'startDate': startDate,
+      'endDate': endDate,
+    });
     final data = await apiService.post(
       endPoint: 'Orders/rent',
-      data: {
-        'CarId': carId,
-        'StartDate': startDate,
-        'EndDate': endDate,
-        'UserNotes': userNotes,
-      },
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: fromData,
     );
     return OrderResponseModel.fromJson(data);
   }

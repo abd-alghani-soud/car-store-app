@@ -9,7 +9,7 @@ import 'package:car_store_app/features/order/presentation/manager/order_cubit/or
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuyFormWidget extends StatelessWidget {
+class BuyFormWidget extends StatefulWidget {
   const BuyFormWidget({
     super.key,
     required this.carId,
@@ -18,6 +18,25 @@ class BuyFormWidget extends StatelessWidget {
 
   final int carId;
   final OrderCubit orderCubit;
+
+  @override
+  State<BuyFormWidget> createState() => _BuyFormWidgetState();
+}
+
+class _BuyFormWidgetState extends State<BuyFormWidget> {
+  final TextEditingController _notesController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.orderCubit.resetState();
+  }
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +48,20 @@ class BuyFormWidget extends StatelessWidget {
         ),
         SizedBox(height: 12),
         MainTextField(
+          controller: _notesController,
           label: 'Notes user',
           hint: '(Optional)',
           fillColor: MyColor.inputFill,
           borderColor: MyColor.primaryColor,
         ),
         SizedBox(height: 20),
-        BlocBuilder<OrderCubit, OrderState>(
-          bloc: orderCubit,
+        BlocConsumer<OrderCubit, OrderState>(
+          bloc: widget.orderCubit,
+          listener: (context, state) {
+            if (state.buyOrderStatus == StatusEnum.success) {
+              _notesController.clear();
+            }
+          },
           builder: (context, state) {
             if (state.buyOrderStatus == StatusEnum.initial) {
               return MainButton(
@@ -45,9 +70,7 @@ class BuyFormWidget extends StatelessWidget {
                 textColor: Colors.white,
                 fontSize: 12,
                 borderRadius: BorderRadius.circular(18),
-                onPressed: () {
-                  orderCubit.buyOrder(carId, '');
-                },
+                onPressed: _submitBuyOrder,
               );
             }
             if (state.buyOrderStatus == StatusEnum.success) {
@@ -63,9 +86,7 @@ class BuyFormWidget extends StatelessWidget {
                     textColor: Colors.white,
                     fontSize: 12,
                     borderRadius: BorderRadius.circular(18),
-                    onPressed: () {
-                      orderCubit.buyOrder(carId, '');
-                    },
+                    onPressed: _submitBuyOrder,
                   ),
                 ],
               );
@@ -76,7 +97,9 @@ class BuyFormWidget extends StatelessWidget {
             if (state.buyOrderStatus == StatusEnum.failure) {
               return Column(
                 children: [
-                  ErrorMessageWidget(messageError: state.errMessage!),
+                  ErrorMessageWidget(
+                    messageError: state.errMessage ?? 'something went wrong!',
+                  ),
                   MainButton(
                     width: 400,
                     text: 'Confirm',
@@ -84,10 +107,7 @@ class BuyFormWidget extends StatelessWidget {
                     textColor: Colors.white,
                     fontSize: 12,
                     borderRadius: BorderRadius.circular(18),
-                    onPressed: () {
-                      print(carId);
-                      orderCubit.buyOrder(carId, '');
-                    },
+                    onPressed: _submitBuyOrder,
                   ),
                 ],
               );
@@ -97,5 +117,9 @@ class BuyFormWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _submitBuyOrder() {
+    widget.orderCubit.buyOrder(widget.carId, _notesController.text);
   }
 }

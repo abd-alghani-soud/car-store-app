@@ -179,6 +179,8 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void resetState() {
-    emit(state.copyWith(buyOrderStatus: StatusEnum.initial));
+    emit(state.copyWith(buyOrderStatus: StatusEnum.initial,
+    installmentOrderStatus: StatusEnum.initial,
+    rentOrderStatus: StatusEnum.initial));
   }
 }

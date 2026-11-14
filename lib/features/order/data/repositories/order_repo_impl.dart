@@ -70,8 +70,10 @@ class OrderRepoImpl extends OrderRepo {
       );
       return right(response);
     } on ServerException catch (e) {
+      print('e:${e.toString()}');
       return Left(ServerFailure(mapExceptionToMessage(e.message)));
     } catch (e) {
+      print('e:${e.toString()}');
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }

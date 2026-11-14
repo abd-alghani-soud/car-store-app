@@ -109,6 +109,7 @@ class _OrdersPageBodyState extends State<OrdersPageBody> {
       case OrderType.installment:
         return InstallmentFormWidget(
           carId: widget.carId,
+          orderCubit: _orderCubit,
           key: ValueKey('InstallmentForm'),
         );
     }
