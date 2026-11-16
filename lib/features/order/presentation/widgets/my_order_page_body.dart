@@ -30,6 +30,24 @@ class _MyOrderPageBodyState extends State<MyOrderPageBody> {
     return BlocConsumer<OrderCubit, OrderState>(
       bloc: _orderCubit,
       listener: (context, state) {
+        if (state.cancelOrderStatus == StatusEnum.success) {
+          _orderCubit.resetState();
+          showSnackBar(
+            message: 'Order cancelled successfully',
+            icon: Icons.offline_pin_outlined,
+            iconColor: Colors.green,
+            context: context,
+          );
+          _orderCubit.getMyOrder();
+        }
+        if (state.cancelOrderStatus == StatusEnum.failure) {
+          showSnackBar(
+            message: state.errMessage ?? 'something went wrong!',
+            icon: Icons.cancel_outlined,
+            iconColor: Colors.red,
+            context: context,
+          );
+        }
         if (state.getMyOrderStatus == StatusEnum.failure) {
           showSnackBar(
             message: state.errMessage ?? 'something went wrong!',
@@ -54,7 +72,12 @@ class _MyOrderPageBodyState extends State<MyOrderPageBody> {
             padding: EdgeInsets.all(16),
             itemCount: order.length,
             itemBuilder: (context, index) {
-              return OrderCardWidget(order: order[index]);
+              return OrderCardWidget(
+                order: order[index],
+                onCancelPressed: () {
+                  _orderCubit.cancelOrder(order[index].orderId);
+                },
+              );
             },
           );
         }
