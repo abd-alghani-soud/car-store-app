@@ -39,7 +39,7 @@ class OrderCubit extends Cubit<OrderState> {
       userNotes: userNotes ?? '',
     );
     result.fold(
-      (failure) {
+          (failure) {
         emit(
           state.copyWith(
             buyOrderStatus: StatusEnum.failure,
@@ -47,7 +47,7 @@ class OrderCubit extends Cubit<OrderState> {
           ),
         );
       },
-      (orderResponse) {
+          (orderResponse) {
         emit(
           state.copyWith(
             buyOrderStatus: StatusEnum.success,
@@ -59,12 +59,10 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   //========================rentOrderCubit========================
-  Future<void> rentOrder(
-    int carId,
-    String? userNotes,
-    DateTime startDate,
-    DateTime endDate,
-  ) async {
+  Future<void> rentOrder(int carId,
+      String? userNotes,
+      DateTime startDate,
+      DateTime endDate,) async {
     emit(state.copyWith(rentOrderStatus: StatusEnum.loading));
     final result = await rentOrderUseCase.call(
       carId: carId,
@@ -73,7 +71,7 @@ class OrderCubit extends Cubit<OrderState> {
       userNotes: userNotes,
     );
     result.fold(
-      (failure) {
+          (failure) {
         emit(
           state.copyWith(
             rentOrderStatus: StatusEnum.failure,
@@ -81,7 +79,7 @@ class OrderCubit extends Cubit<OrderState> {
           ),
         );
       },
-      (orderResponse) {
+          (orderResponse) {
         emit(
           state.copyWith(
             rentOrderStatus: StatusEnum.success,
@@ -93,11 +91,9 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   //========================installmentOrderCubit========================
-  Future<void> installmentOrder(
-    int carId,
-    String? userNotes,
-    int installmentMonth,
-  ) async {
+  Future<void> installmentOrder(int carId,
+      String? userNotes,
+      int installmentMonth,) async {
     emit(state.copyWith(installmentOrderStatus: StatusEnum.loading));
     final result = await installmentOrderUseCase.call(
       carId: carId,
@@ -105,7 +101,7 @@ class OrderCubit extends Cubit<OrderState> {
       userNotes: userNotes,
     );
     result.fold(
-      (failure) {
+          (failure) {
         emit(
           state.copyWith(
             installmentOrderStatus: StatusEnum.failure,
@@ -113,7 +109,7 @@ class OrderCubit extends Cubit<OrderState> {
           ),
         );
       },
-      (orderResponse) {
+          (orderResponse) {
         emit(
           state.copyWith(
             installmentOrderStatus: StatusEnum.success,
@@ -129,7 +125,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(getMyOrderStatus: StatusEnum.loading));
     final result = await getMyOrderUseCase.call();
     result.fold(
-      (failure) {
+          (failure) {
         emit(
           state.copyWith(
             getMyOrderStatus: StatusEnum.failure,
@@ -137,14 +133,14 @@ class OrderCubit extends Cubit<OrderState> {
           ),
         );
       },
-      (orders) async {
+          (orders) async {
         for (var order in orders) {
           final carResult = await getIt<GetCarByIdUsecase>()(order.carId);
           carResult.fold(
-            (l) {
+                (l) {
               order.carName = 'unKnown car';
             },
-            (r) {
+                (r) {
               order.carName = r.name;
             },
           );
@@ -164,7 +160,7 @@ class OrderCubit extends Cubit<OrderState> {
     emit(state.copyWith(cancelOrderStatus: StatusEnum.loading));
     final result = await cancelOrderUseCase.call(orderId: orderId);
     result.fold(
-      (failure) {
+          (failure) {
         emit(
           state.copyWith(
             cancelOrderStatus: StatusEnum.failure,
@@ -172,15 +168,14 @@ class OrderCubit extends Cubit<OrderState> {
           ),
         );
       },
-      (_) {
+          (_) {
         emit(state.copyWith(cancelOrderStatus: StatusEnum.success));
       },
     );
   }
 
   void resetState() {
-    emit(state.copyWith(buyOrderStatus: StatusEnum.initial,
-    installmentOrderStatus: StatusEnum.initial,
-    rentOrderStatus: StatusEnum.initial));
+    emit(state.copyWith(
+        cancelOrderStatus: StatusEnum.initial));
   }
 }

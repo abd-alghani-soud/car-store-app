@@ -99,7 +99,11 @@ class _OrdersPageBodyState extends State<OrdersPageBody> {
   Widget _buildFormContent(OrderType type) {
     switch (type) {
       case OrderType.rent:
-        return RentFormWidget(carId: widget.carId, key: ValueKey('RentForm'));
+        return RentFormWidget(
+          carId: widget.carId,
+          orderCubit: _orderCubit,
+          key: ValueKey('RentForm'),
+        );
       case OrderType.buy:
         return BuyFormWidget(
           carId: widget.carId,

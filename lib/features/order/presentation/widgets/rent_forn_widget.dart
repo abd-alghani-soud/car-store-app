@@ -1,22 +1,32 @@
+import 'package:car_store_app/core/enums/status_enum.dart';
+import 'package:car_store_app/core/widgets/loading_widget.dart';
 import 'package:car_store_app/core/widgets/main_button.dart';
+import 'package:car_store_app/features/order/presentation/manager/order_cubit/order_cubit.dart';
 import 'package:car_store_app/features/order/presentation/widgets/custom_date_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/component/function/show_snackbar.dart';
 import '../../../../core/constants/my_color.dart';
 import '../../../../core/widgets/main_text_field.dart';
 
 class RentFormWidget extends StatefulWidget {
   final int carId;
+  final OrderCubit orderCubit;
 
-  const RentFormWidget({super.key, required this.carId});
+  const RentFormWidget({
+    super.key,
+    required this.carId,
+    required this.orderCubit,
+  });
 
   @override
   State<RentFormWidget> createState() => _RentFormWidgetState();
 }
 
 class _RentFormWidgetState extends State<RentFormWidget> {
+  final TextEditingController _notesController = TextEditingController();
   DateTime? startDate;
   DateTime? endDate;
-  bool isLoading = false;
 
   Future<void> _pickDate(BuildContext context, {required bool isStart}) async {
     final DateTime? picked = await showDatePicker(
@@ -35,6 +45,12 @@ class _RentFormWidgetState extends State<RentFormWidget> {
         }
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+    super.dispose();
   }
 
   @override
@@ -69,55 +85,84 @@ class _RentFormWidgetState extends State<RentFormWidget> {
         ),
         const SizedBox(height: 12),
         MainTextField(
+          controller: _notesController,
           label: 'Notes user',
           hint: '(Optional)',
           fillColor: MyColor.inputFill,
           borderColor: MyColor.primaryColor,
         ),
         const SizedBox(height: 24),
-        MainButton(
-          text: 'Confirm',
-          borderRadius: BorderRadius.circular(18),
-          color: MyColor.accentBlue,
-          textColor: Colors.white,
-          fontSize: 12,
-          onPressed: isLoading
-              ? null
-              : () async {
-                  if (startDate == null || endDate == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Please select a start and end data!"),
-                      ),
-                    );
-                    return;
-                  }
-
-                  if (endDate!.isBefore(startDate!)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          "The end date must be after the start date!",
-                        ),
-                      ),
-                    );
-                    return;
-                  }
-                  setState(() {
-                    isLoading = true;
-                  });
-                  await Future.delayed(const Duration(seconds: 2));
-                  print("Car ID: ${widget.carId}");
-                  print("Start Date: $startDate");
-                  print("End Date: $endDate");
-                  if (mounted) {
-                    setState(() {
-                      isLoading = false;
-                    });
-                  }
-                },
+        BlocConsumer<OrderCubit, OrderState>(
+          bloc: widget.orderCubit,
+          listener: (context, state) {
+            if (state.rentOrderStatus == StatusEnum.success) {
+              showSnackBar(
+                message: 'purchased successfully',
+                icon: Icons.offline_pin_outlined,
+                iconColor: Colors.green,
+                context: context,
+              );
+              _notesController.clear();
+            }
+            if (state.rentOrderStatus == StatusEnum.failure) {
+              showSnackBar(
+                message: state.errMessage ?? 'someThing went wrong!',
+                icon: Icons.cancel_outlined,
+                iconColor: Colors.red,
+                context: context,
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state.rentOrderStatus == StatusEnum.initial ||
+                state.rentOrderStatus == StatusEnum.success ||
+                state.rentOrderStatus == StatusEnum.failure) {
+              return MainButton(
+                width: 400,
+                text: 'Confirm',
+                borderRadius: BorderRadius.circular(18),
+                color: MyColor.accentBlue,
+                textColor: Colors.white,
+                fontSize: 12,
+                onPressed: _submitRentOrder,
+              );
+            }
+            if (state.rentOrderStatus == StatusEnum.loading) {
+              return Center(child: LoadingWidget());
+            }
+            return SizedBox();
+          },
         ),
       ],
+    );
+  }
+
+  void _submitRentOrder() {
+    if (startDate == null || endDate == null) {
+      showSnackBar(
+        message: 'Please select start and end dates!',
+        icon: Icons.warning_amber_outlined,
+        iconColor: Colors.yellow,
+        context: context,
+      );
+      return;
+    }
+
+    if (!endDate!.isAfter(startDate!)) {
+      showSnackBar(
+        message: 'End date must be after start date!',
+        icon: Icons.warning_amber_outlined,
+        iconColor: Colors.yellow,
+        context: context,
+      );
+      return;
+    }
+
+    widget.orderCubit.rentOrder(
+      widget.carId,
+      _notesController.text,
+      startDate!,
+      endDate!,
     );
   }
 }

@@ -1,6 +1,6 @@
+import 'package:car_store_app/core/component/function/show_snackbar.dart';
 import 'package:car_store_app/core/constants/my_color.dart';
 import 'package:car_store_app/core/enums/status_enum.dart';
-import 'package:car_store_app/core/widgets/error_message_widget.dart';
 import 'package:car_store_app/core/widgets/loading_widget.dart';
 import 'package:car_store_app/features/order/presentation/manager/order_cubit/order_cubit.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +27,18 @@ class _MyOrderPageBodyState extends State<MyOrderPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OrderCubit, OrderState>(
+    return BlocConsumer<OrderCubit, OrderState>(
       bloc: _orderCubit,
+      listener: (context, state) {
+        if (state.getMyOrderStatus == StatusEnum.failure) {
+          showSnackBar(
+            message: state.errMessage ?? 'something went wrong!',
+            icon: Icons.cancel_outlined,
+            iconColor: Colors.red,
+            context: context,
+          );
+        }
+      },
       builder: (context, state) {
         final order = state.myOrders ?? [];
         if (state.getMyOrderStatus == StatusEnum.success) {
@@ -44,17 +54,12 @@ class _MyOrderPageBodyState extends State<MyOrderPageBody> {
             padding: EdgeInsets.all(16),
             itemCount: order.length,
             itemBuilder: (context, index) {
-              return OrderCardWidget(order: order[index], onViewDetails: () {});
+              return OrderCardWidget(order: order[index]);
             },
           );
         }
         if (state.getMyOrderStatus == StatusEnum.loading) {
           return LoadingWidget();
-        }
-        if (state.getMyOrderStatus == StatusEnum.failure) {
-          return Center(
-            child: ErrorMessageWidget(messageError: state.errMessage!),
-          );
         }
         return SizedBox(height: 400);
       },
