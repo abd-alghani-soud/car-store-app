@@ -62,16 +62,13 @@ class CarCardWidget extends StatelessWidget {
                             );
                           },
                         )
-                      : Image.asset(
-                          imagePath,
-                          height: 140,
-                          fit: BoxFit.cover,
-                        ),
+                      : Image.asset(imagePath, height: 140, fit: BoxFit.cover),
                 ),
                 BlocBuilder<FavoriteBloc, FavoriteState>(
                   bloc: getIt<FavoriteBloc>(),
                   builder: (context, favState) {
-                    final bool isFav = carId > 0 &&
+                    final bool isFav =
+                        carId > 0 &&
                         favState.favorites.any((f) => f.id == carId);
 
                     return GestureDetector(
@@ -79,8 +76,9 @@ class CarCardWidget extends StatelessWidget {
                         if (onFavoritePressed != null) {
                           onFavoritePressed!();
                         } else if (carId > 0) {
-                          getIt<FavoriteBloc>()
-                              .add(ToggleFavoriteEvent(carId: carId));
+                          getIt<FavoriteBloc>().add(
+                            ToggleFavoriteEvent(carId: carId),
+                          );
                         }
                       },
                       child: Container(

@@ -13,16 +13,6 @@ class MainPage extends StatelessWidget {
   final List<Widget> _pages = const [
     HomePage(),
     FavoritePage(),
-    Center(
-      child: Text(
-        'Orders Page',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: MyColor.textPrimary,
-        ),
-      ),
-    ),
     MyOrderPage(),
     Center(
       child: Text(

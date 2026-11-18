@@ -249,6 +249,12 @@ extension GetItInjectableX on _i174.GetIt {
         cancelOrderUseCase: gh<_i809.CancelOrderUseCase>(),
       ),
     );
+    gh.lazySingleton<_i866.FavoriteBloc>(
+      () => _i866.FavoriteBloc(
+        gh<_i623.GetMyFavoritesUseCase>(),
+        gh<_i692.ToggleFavoriteUseCase>(),
+      ),
+    );
     return this;
   }
 }
