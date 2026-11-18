@@ -3,6 +3,8 @@ import 'package:car_store_app/features/favorites/presentation/pages/favorite_pag
 import 'package:car_store_app/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../../order/presentation/pages/my_order_page.dart';
+
 class MainPage extends StatelessWidget {
   MainPage({super.key});
 
@@ -21,6 +23,7 @@ class MainPage extends StatelessWidget {
         ),
       ),
     ),
+    MyOrderPage(),
     Center(
       child: Text(
         'Profile Page',

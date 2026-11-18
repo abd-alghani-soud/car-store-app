@@ -6,6 +6,7 @@ import 'core/route/app_route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesService.init();
   await configureDependencies();
   await SharedPreferencesService.init();
   runApp(const MyApp());
