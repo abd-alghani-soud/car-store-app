@@ -1,4 +1,4 @@
-import 'package:car_store_app/features/home/domain/entity/car_entity.dart';
+import 'package:car_store_app/core/entities/car_entity.dart';
 import 'package:flutter/foundation.dart';
 
 class CarModel extends CarEntity {

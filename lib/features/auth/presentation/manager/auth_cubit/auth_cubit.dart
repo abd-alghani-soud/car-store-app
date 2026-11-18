@@ -71,8 +71,8 @@ class AuthCubit extends Cubit<AuthState> {
           ),
         );
       },
-      (loginInf) async{
-        if(loginInf.token.isNotEmpty){
+      (loginInf) async {
+        if (loginInf.token.isNotEmpty) {
           await SharedPreferencesService.storeToken(loginInf.token);
         }
         emit(

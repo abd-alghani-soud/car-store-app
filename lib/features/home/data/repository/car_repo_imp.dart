@@ -1,8 +1,8 @@
+import 'package:car_store_app/core/entities/car_entity.dart';
 import 'package:car_store_app/core/error/exceptions.dart';
 import 'package:car_store_app/core/error/failures.dart';
+import 'package:car_store_app/core/models/car_model.dart';
 import 'package:car_store_app/features/home/data/datasource/cars_remote_datasource.dart';
-import 'package:car_store_app/features/home/data/model/car_model.dart';
-import 'package:car_store_app/features/home/domain/entity/car_entity.dart';
 import 'package:car_store_app/features/home/domain/repository/car_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';

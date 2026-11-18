@@ -17,7 +17,8 @@ class AllCarsBodyWidget extends StatefulWidget {
 }
 
 class _AllCarsBodyWidgetState extends State<AllCarsBodyWidget> {
-  final ValueNotifier<String> _selectedCategoryNotifier = ValueNotifier<String>("All");
+  final ValueNotifier<String> _selectedCategoryNotifier =
+      ValueNotifier<String>("All");
 
   @override
   void initState() {
@@ -43,7 +44,6 @@ class _AllCarsBodyWidgetState extends State<AllCarsBodyWidget> {
             return ValueListenableBuilder<String>(
               valueListenable: _selectedCategoryNotifier,
               builder: (context, selectedCategory, child) {
-                // If selected category no longer exists in fetched brands, reset to "All"
                 if (!categories.contains(selectedCategory)) {
                   _selectedCategoryNotifier.value = "All";
                 }
@@ -79,10 +79,18 @@ class _AllCarsBodyWidgetState extends State<AllCarsBodyWidget> {
                   builder: (context, selectedCategory, child) {
                     final filteredCars = selectedCategory == "All"
                         ? cars
-                        : cars.where((car) => car.brand.toLowerCase() == selectedCategory.toLowerCase()).toList();
+                        : cars
+                            .where(
+                              (car) =>
+                                  car.brand.toLowerCase() ==
+                                  selectedCategory.toLowerCase(),
+                            )
+                            .toList();
 
                     if (filteredCars.isEmpty) {
-                      return const Center(child: Text("No cars found for this category"));
+                      return const Center(
+                        child: Text("No cars found for this category"),
+                      );
                     }
 
                     return ListView.builder(
@@ -91,6 +99,7 @@ class _AllCarsBodyWidgetState extends State<AllCarsBodyWidget> {
                       itemBuilder: (context, index) {
                         final car = filteredCars[index];
                         final carMap = {
+                          "id": car.id,
                           "name": car.name,
                           "brand": car.brand,
                           "price": car.price,

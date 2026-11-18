@@ -48,7 +48,8 @@ class CustomCarCardWidget extends StatelessWidget {
         BlocBuilder<CarsBloc, CarsState>(
           bloc: getIt<CarsBloc>(),
           builder: (context, state) {
-            if (state.getPublicCarsStatus == StatusEnum.loading || state.getPublicCarsStatus == StatusEnum.initial) {
+            if (state.getPublicCarsStatus == StatusEnum.loading ||
+                state.getPublicCarsStatus == StatusEnum.initial) {
               return const SizedBox(
                 height: 200,
                 child: Center(child: LoadingWidget()),
@@ -79,7 +80,7 @@ class CustomCarCardWidget extends StatelessWidget {
                 "rating": car.rating,
                 "reviews": car.reviews,
                 "transmission": car.transmission,
-                "image": car.image, // Real API image URL!
+                "image": car.image,
               };
               return CarCardWidget(car: carMap, margin: EdgeInsets.zero);
             }
