@@ -14,6 +14,6 @@ class BuyOrderUseCase {
     required int carId,
     String? userNotes,
   }) async {
-    return await orderRepo.buyOrder(carId: carId, userNotes: userNotes);
+    return await orderRepo.buyOrderRepo(carId: carId, userNotes: userNotes);
   }
 }

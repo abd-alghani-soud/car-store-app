@@ -15,7 +15,7 @@ class InstallmentOrderUseCase {
     required int installmentMonth,
     String? userNotes,
   }) async {
-    return await orderRepo.installmentOrder(
+    return await orderRepo.installmentOrderRepo(
       carId: carId,
       installmentMonth: installmentMonth,
       userNotes: userNotes,

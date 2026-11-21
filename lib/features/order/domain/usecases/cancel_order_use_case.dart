@@ -10,6 +10,6 @@ class CancelOrderUseCase {
   CancelOrderUseCase({required this.orderRepo});
 
   Future<Either<Failure, void>> call({required int orderId}) async {
-    return await orderRepo.cancelOrder(orderId: orderId);
+    return await orderRepo.cancelOrderRepo(orderId: orderId);
   }
 }

@@ -11,6 +11,6 @@ class GetMyOrderUseCase {
   GetMyOrderUseCase({required this.orderRepo});
 
   Future<Either<Failure, List<OrderEntity>>> call() async {
-    return await orderRepo.getMyOrder();
+    return await orderRepo.getMyOrderRepo();
   }
 }

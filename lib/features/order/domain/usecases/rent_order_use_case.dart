@@ -16,7 +16,7 @@ class RentOrderUseCase {
     required DateTime endDate,
     String? userNotes,
   }) async {
-    return await orderRepo.rentOrder(
+    return await orderRepo.rentOrderRepo(
       carId: carId,
       startDate: startDate,
       endDate: endDate,
