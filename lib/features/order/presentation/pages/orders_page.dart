@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/my_color.dart';
 
-enum OrderType { rent, buy, installment }
+
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key, required this.carId});
