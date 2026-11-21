@@ -8,7 +8,7 @@ class OrderModel extends OrderEntity {
   final int carId;
   final String orderType;
   final String orderStatus;
-  final num totalPrice; // تستقبل int أو double بأمان
+  final num totalPrice;
   final String? userNotes;
   final String? adminNotes;
   final DateTime createdAt;
@@ -34,7 +34,7 @@ class OrderModel extends OrderEntity {
   }) : super(
          orderType: orderType,
          createdAt: createdAt,
-         orderStatus: orderType,
+         orderStatus: orderStatus,
          totalPrice: totalPrice,
          orderId: orderId,
          userId: userId,
@@ -42,7 +42,7 @@ class OrderModel extends OrderEntity {
          adminNotes: adminNotes,
        );
 
-  // 1. تحويل الـ JSON القادم من الـ API إلى كائن (Object)
+
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       orderId: json['orderId'] ?? 0,
@@ -65,7 +65,7 @@ class OrderModel extends OrderEntity {
     );
   }
 
-  // 2. تحويل كائن الـ Model إلى JSON لإرساله إلى الـ API (إذا لزم الأمر)
+
   Map<String, dynamic> toJson() {
     return {
       'orderId': orderId,

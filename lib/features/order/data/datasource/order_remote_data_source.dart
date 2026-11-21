@@ -5,7 +5,9 @@ import 'package:car_store_app/features/order/data/model/order_response_model.dar
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-//===================OrderRemoteDataSource==================
+//=================== abstract ==================
+
+//=================== OrderRemoteDataSource ==================
 abstract class OrderRemoteDataSource {
   Future<OrderResponseModel> buyOrderDataSource({
     required int carId,
@@ -30,19 +32,24 @@ abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getMyOrderDataSource();
 }
 
+
+
+
+
+//=================== buyOrderDataSourceImpl ==================
 @Injectable(as: OrderRemoteDataSource)
 class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
   final ApiService apiService;
-  final token = SharedPreferencesService.getToken();
 
   OrderRemoteDataSourceImpl({required this.apiService});
 
-  //===================buyOrderDataSource==================
+  //=================== buyOrderDataSource ==================
   @override
   Future<OrderResponseModel> buyOrderDataSource({
     required int carId,
     String? userNotes,
   }) async {
+    final token = SharedPreferencesService.getToken();
     FormData fromData = FormData.fromMap({
       'CarId': carId,
       'UserNotes': userNotes,
@@ -50,26 +57,40 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     final data = await apiService.post(
       endPoint: 'Orders/buy',
       data: fromData,
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      options: Options(
+        headers: {
+          if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+        },
+      ),
     );
     return OrderResponseModel.fromJson(data);
   }
 
-  //===================cancelOrderDataSource==================
+  //=================== cancelOrderDataSource ==================
   @override
   Future<void> cancelOrderDataSource({required int orderId}) async {
+    final token = SharedPreferencesService.getToken();
     await apiService.put(
-      endPoint: 'Orders/${orderId}/cancel',
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      endPoint: 'Orders/$orderId/cancel',
+      options: Options(
+        headers: {
+          if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+        },
+      ),
     );
   }
 
-  //===================getMyOrderDataSource==================
+  //=================== getMyOrderDataSource ==================
   @override
   Future<List<OrderModel>> getMyOrderDataSource() async {
+    final token = SharedPreferencesService.getToken();
     final data = await apiService.get(
       endPoint: 'Orders/my-orders',
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      options: Options(
+        headers: {
+          if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+        },
+      ),
     );
     List<OrderModel> myOrders = [];
     for (var item in data) {
@@ -78,13 +99,14 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     return myOrders;
   }
 
-  //===================installmentOrderDataSource==================
+  //===================  ==================
   @override
   Future<OrderResponseModel> installmentOrderDataSource({
     required int carId,
     required int installmentMonth,
     String? userNotes,
   }) async {
+    final token = SharedPreferencesService.getToken();
     FormData fromData = FormData.fromMap({
       'CarId': carId,
       'UserNotes': userNotes,
@@ -92,13 +114,17 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     });
     final data = await apiService.post(
       endPoint: 'Orders/installment',
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      options: Options(
+        headers: {
+          if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+        },
+      ),
       data: fromData,
     );
     return OrderResponseModel.fromJson(data);
   }
 
-  //===================rentOrderDataSource==================
+  //=================== rentOrderDataSource ==================
   @override
   Future<OrderResponseModel> rentOrderDataSource({
     required int carId,
@@ -106,15 +132,20 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
     required DateTime endDate,
     String? userNotes,
   }) async {
+    final token = SharedPreferencesService.getToken();
     FormData fromData = FormData.fromMap({
       'CarId': carId,
       'UserNotes': userNotes,
-      'startDate': startDate,
-      'endDate': endDate,
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate.toIso8601String(),
     });
     final data = await apiService.post(
       endPoint: 'Orders/rent',
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      options: Options(
+        headers: {
+          if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+        },
+      ),
       data: fromData,
     );
     return OrderResponseModel.fromJson(data);

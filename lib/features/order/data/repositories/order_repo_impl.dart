@@ -13,9 +13,9 @@ class OrderRepoImpl extends OrderRepo {
   final OrderRemoteDataSource orderRemoteDataSource;
 
   OrderRepoImpl({required this.orderRemoteDataSource});
-//==================buyOrder==========================
+//================== buyOrderRepo ==========================
   @override
-  Future<Either<Failure, OrderResponseEntity>> buyOrder({
+  Future<Either<Failure, OrderResponseEntity>> buyOrderRepo({
     required int carId,
     String? userNotes,
   }) async {
@@ -31,9 +31,9 @@ class OrderRepoImpl extends OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-//========================cancelOrder=======================
+//======================== cancelOrderRepo =======================
   @override
-  Future<Either<Failure, void>> cancelOrder({required int orderId}) async {
+  Future<Either<Failure, void>> cancelOrderRepo({required int orderId}) async {
     try {
       await orderRemoteDataSource.cancelOrderDataSource(orderId: orderId);
       return right(null);
@@ -43,9 +43,9 @@ class OrderRepoImpl extends OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-//========================getMyOrder=========================
+//======================== getMyOrderRepo =========================
   @override
-  Future<Either<Failure, List<OrderEntity>>> getMyOrder() async {
+  Future<Either<Failure, List<OrderEntity>>> getMyOrderRepo() async {
     try {
       final response = await orderRemoteDataSource.getMyOrderDataSource();
       return right(response);
@@ -55,9 +55,9 @@ class OrderRepoImpl extends OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-//=========================installmentOrder=====================
+//========================= installmentOrderRepo =====================
   @override
-  Future<Either<Failure, OrderResponseEntity>> installmentOrder({
+  Future<Either<Failure, OrderResponseEntity>> installmentOrderRepo({
     required int carId,
     required int installmentMonth,
     String? userNotes,
@@ -77,9 +77,9 @@ class OrderRepoImpl extends OrderRepo {
       return Left(ServerFailure(mapExceptionToMessage(e)));
     }
   }
-//==============================rentOrder===========================
+//============================== rentOrderRepo ===========================
   @override
-  Future<Either<Failure, OrderResponseEntity>> rentOrder({
+  Future<Either<Failure, OrderResponseEntity>> rentOrderRepo({
     required int carId,
     required DateTime startDate,
     required DateTime endDate,
