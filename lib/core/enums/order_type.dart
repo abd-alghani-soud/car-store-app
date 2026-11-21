@@ -1,0 +1,1 @@
+enum OrderType { rent, buy, installment }

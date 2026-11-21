@@ -58,9 +58,12 @@ class _MyOrderPageBodyState extends State<MyOrderPageBody> {
         }
       },
       builder: (context, state) {
-        final order = state.myOrders ?? [];
+        final allOrders = state.myOrders ?? [];
+        final activeOrders =
+            allOrders.where((o) => o.orderStatus != 'Canceled').toList();
+
         if (state.getMyOrderStatus == StatusEnum.success) {
-          if (order.isEmpty) {
+          if (activeOrders.isEmpty) {
             return Center(
               child: Text(
                 'You have not placed any orders yet !',
@@ -70,12 +73,12 @@ class _MyOrderPageBodyState extends State<MyOrderPageBody> {
           }
           return ListView.builder(
             padding: EdgeInsets.all(16),
-            itemCount: order.length,
+            itemCount: activeOrders.length,
             itemBuilder: (context, index) {
               return OrderCardWidget(
-                order: order[index],
+                order: activeOrders[index],
                 onCancelPressed: () {
-                  _orderCubit.cancelOrder(order[index].orderId);
+                  _orderCubit.cancelOrder(activeOrders[index].orderId);
                 },
               );
             },

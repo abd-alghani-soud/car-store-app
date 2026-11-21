@@ -3,7 +3,7 @@ import '../../../../core/enums/order_type.dart';
 import '../manager/order_cubit/order_cubit.dart';
 import 'buy_form_widget.dart';
 import 'installment_form_widget.dart';
-import 'rent_forn_widget.dart';
+import 'rent_form_widget.dart';
 
 class OrderFormContentWidget extends StatelessWidget {
   final OrderType selectedType;
