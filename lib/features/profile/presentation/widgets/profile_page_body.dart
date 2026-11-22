@@ -1,5 +1,7 @@
 import 'package:car_store_app/core/constants/my_color.dart';
+import 'package:car_store_app/core/route/app_route.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/component/function/show_dialog_function.dart';
 import 'custom_profile_option_card.dart';
 
@@ -41,7 +43,12 @@ class ProfilePageBody extends StatelessWidget {
             style: TextStyle(color: MyColor.textSecondary, fontSize: 14),
           ),
           const SizedBox(height: 24),
-          CustomProfileOptionCard(title: 'Change Password', onTap: () {}),
+          CustomProfileOptionCard(
+            title: 'Change Password',
+            onTap: () {
+              GoRouter.of(context).push(AppRoute.kChangePasswordPage);
+            },
+          ),
           const SizedBox(height: 16),
           CustomProfileOptionCard(title: 'Update Profile', onTap: () {}),
           const SizedBox(height: 16),
