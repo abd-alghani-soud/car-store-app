@@ -3,12 +3,16 @@ import 'package:car_store_app/features/favorites/presentation/pages/favorite_pag
 import 'package:car_store_app/features/home/presentation/pages/home_page.dart';
 import 'package:car_store_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
-
 import '../../../order/presentation/pages/my_order_page.dart';
 
-class MainPage extends StatelessWidget {
-  MainPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   final ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
 
   final List<Widget> _pages = const [
@@ -17,6 +21,12 @@ class MainPage extends StatelessWidget {
     MyOrderPage(),
     ProfilePage(),
   ];
+
+  @override
+  void dispose() {
+    _currentIndexNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

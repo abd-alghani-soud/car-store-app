@@ -44,3 +44,12 @@ String? validateRequired(String? value) {
   }
   return null;
 }
+
+String? validateNumber(String? value) {
+  final text = value?.trim() ?? '';
+  if (text.isEmpty) return null;
+  if (!RegExp(r'^\d+$').hasMatch(text)) {
+    return 'phone number must contain digits only';
+  }
+  return null;
+}

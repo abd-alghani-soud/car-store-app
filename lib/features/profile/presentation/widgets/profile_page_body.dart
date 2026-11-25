@@ -50,7 +50,12 @@ class ProfilePageBody extends StatelessWidget {
             },
           ),
           const SizedBox(height: 16),
-          CustomProfileOptionCard(title: 'Update Profile', onTap: () {}),
+          CustomProfileOptionCard(
+            title: 'Update Profile',
+            onTap: () {
+              GoRouter.of(context).push(AppRoute.kUpdateProfilePage);
+            },
+          ),
           const SizedBox(height: 16),
           CustomProfileOptionCard(
             title: 'Delete account',

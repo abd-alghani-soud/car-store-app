@@ -6,6 +6,7 @@ import 'package:car_store_app/features/home/presentation/pages/top_brands_page.d
 import 'package:car_store_app/features/main/presentation/pages/main_page.dart';
 import 'package:car_store_app/features/order/presentation/pages/orders_page.dart';
 import 'package:car_store_app/features/profile/presentation/pages/change_password_page.dart';
+import 'package:car_store_app/features/profile/presentation/pages/update_profile_page.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 
@@ -18,6 +19,7 @@ abstract class AppRoute {
   static const kAllCarsPage = '/allCarsPage';
   static const kOrdersPage = '/ordersPage';
   static const kChangePasswordPage = '/changePasswordPage';
+  static const kUpdateProfilePage = '/updateProfilePage';
 
   static final router = GoRouter(
     routes: [
@@ -28,6 +30,10 @@ abstract class AppRoute {
       GoRoute(
         path: kChangePasswordPage,
         builder: (context, state) => ChangePasswordPage(),
+      ),
+      GoRoute(
+        path: kUpdateProfilePage,
+        builder: (context, state) => UpdateProfilePage(),
       ),
       GoRoute(
         path: kTopBrandsPage,
